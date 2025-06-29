@@ -1,0 +1,84 @@
+O SQLModel usa o nome das classes que declaramos como tabel = True para o nome das tabelas 
+ex:
+class Personagem => o nome da tabela sera personagem 
+Evento => evento 
+E assim por diante...
+
+Caso quissese dar um nome a tabela diferente da classe usaria 
+class Personagem(SQLModel, table=True):
+    __tablename__ = "herois"  => aqui voce coloca o nome que deseja dar a tabela 
+
+
+✨ Dicas rápidas para não esquecer:
+Relationship(...): é o elo com outra tabela. Ele te dá acesso ao(s) objeto(s) relacionados.
+
+back_populates="...": sempre aponta pro nome do campo do outro lado da conexão (espelho da relação).
+
+List[...]: indica que o campo guarda vários registros relacionados (porque o relacionamento é do tipo N:N).
+
+Optional[...] + = None (em outros campos): permitem que aquele campo seja preenchido ou não — ou seja, não obrigatório.
+
+
+✅ 1. O Relationship funciona sem o campo personagem_id?
+Tecnicamente, não. O Relationship precisa de uma foreign key pra funcionar corretamente. Ele não faz mágica sozinho — ele depende da chave estrangeira declarada com Field(foreign_key=...) pra saber como conectar as tabelas.
+
+Exemplo:
+
+personagem_id: int = Field(foreign_key="personagem.id")
+
+Essa linha:
+
+Cria o vínculo entre a tabela atual e a tabela personagem
+
+Permite que o Relationship(...) entenda: “Ah! Esse ID aqui corresponde ao id lá na tabela personagem.”
+
+🔁 Ou seja: > O Relationship sozinho não conecta nada sem a presença da chave estrangeira (ForeignKey).
+
+Nem sempre precisamos usar o back_populates no entanto faz muito mais sentido usar pois ele permite que possamos navegar de um lado para o outro nas 
+tabelas assim as consultas ficam mais consistentes 
+
+
+
+🧱 O que é Field() afinal?
+O Field() é uma função fornecida pelo SQLModel (que na real vem do Pydantic/SQLAlchemy) que permite configurar detalhes extras de um campo, como:
+
+Torná-lo uma chave primária
+
+Definir valores padrão
+
+Adicionar validações, restrições, descrições
+
+Dizer que aquele campo é uma foreign key (chave estrangeira)
+
+🛠️ Já campos simples como nome: str, historia: Optional[str]...
+Esses são campos que não precisam de nada especial além do tipo. Então podem ser declarados direto, sem o Field(). Exemplo:
+
+python
+nome: str  # Simples, obrigatório
+historia: Optional[str] = None  # Opcional, com valor padrão
+O SQLModel já entende o tipo, se é obrigatório ou não, e qual é o valor padrão só por essa sintaxe.
+
+Tipo de campo	Precisa de Field()?	Por quê?
+Simples, como str, int	❌ Não	O tipo + valor padrão já são suficientes
+Chave primária	✅ Sim	Precisa dizer que é primary_key=True
+Chave estrangeira	✅ Sim	Precisa de foreign_key="..."
+Quer definir metadata extra	✅ Sim	Ex: description=, max_length=, etc
+
+
+
+Porque usamos o default = None na criação de primary keys
+1. 🧠 O id é gerado automaticamente pelo banco
+Quando usamos primary_key=True no SQLModel e não passamos valor para o id ao criar o objeto, o banco de dados cuida disso pra gente (auto-incremento).
+
+Mas o Python precisa receber algum valor ali na criação do objeto, e se não tiver = None, ele vai reclamar que está faltando o campo.
+
+➡️ Por isso dizemos: "Este campo é opcional e começa como None, porque o banco vai preenchê-lo pra mim."
+
+
+
+
+Os SCHEMAS:
+schemas = Camadas de validação e entrada/saída de dados
+Entrada de dados (POST)	Define o que o usuário pode ou deve enviar ao cadastrar algo
+Saída de dados (GET)	Define o que a API devolve ao listar/mostrar um objeto
+schemas = Camadas de validação e entrada/saída de dados

@@ -25,7 +25,7 @@ def criar_banco(): #Essa função cria as tabelas no banco baseadas nos modelos 
 
 def get_session():
     with Session(engine) as session:
-        yield session
+        yield session #retorna uma sessão do banco de dados
 """
 Essa função é um gerador de sessão.
 Sempre que precisarmos interagir com o banco (ex: listar personagens), vamos “pegar uma sessão” com ela

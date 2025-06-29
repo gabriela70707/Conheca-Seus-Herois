@@ -6,4 +6,4 @@ class PersonagemEmblema(SQLModel, table=True):
     emblema_id: Optional[int] = Field(default=None, foreign_key = "emblema.id", primary_key = True)
 
     personagem: "Personagem" = Relationship(back_populates="emblemas")
-    personagem: "Emblema" = Relationship(back_populates="personagens")
+    emblema: "Emblema" = Relationship(back_populates="personagens")

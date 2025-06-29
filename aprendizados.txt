@@ -82,3 +82,14 @@ schemas = Camadas de validação e entrada/saída de dados
 Entrada de dados (POST)	Define o que o usuário pode ou deve enviar ao cadastrar algo
 Saída de dados (GET)	Define o que a API devolve ao listar/mostrar um objeto
 schemas = Camadas de validação e entrada/saída de dados
+
+
+DEPENDS
+Pega uma função e seu retorno e passa como parametro em uma outra função 
+
+SESSION
+session : Session é so para indicar que session é do tipo sessão 
+⚡ Resumo mágico:
+Parte do código	O que faz?
+Depends(get_session)	Chama a função get_session() e injeta o resultado
+session: Session = Depends(...)	Diz: “esse parâmetro vai receber algo do tipo Session”

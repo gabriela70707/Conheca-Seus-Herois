@@ -6,4 +6,4 @@ class Conflito(SQLModel, table=True):
     nome : str
     descrição : Optional[str] = None
 
-    personagens: List["PersonagemConflito"] = Relationship(back_populates = "conflitos")
+    personagens: List["PersonagemConflito"] = Relationship(back_populates = "conflito")

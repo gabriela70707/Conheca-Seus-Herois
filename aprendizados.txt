@@ -180,3 +180,39 @@ Prontinha pra próxima aventura? Vamos codar mais uma funcionalidade? 🚀💻�
 **dados.dict()	Converte um schema em argumentos para criar objeto ORM
 response_model=List[...]	Define o formato da resposta da rota
 session.query(Model).all()	Consulta todos os registros de uma tabela do banco
+
+
+Isso aí é a essência do que tá rolando na linha Evento(**dados.dict()). Bora só reforçar com uma explicação bem visual pra cravar de vez esse entendimento:
+
+🚦 Fluxo completo, passo a passo
+Usuário envia JSON no corpo da requisição:
+
+json
+{
+  "nome": "Davi é coroado",
+  "descricao": "Unção como rei de Israel"
+}
+FastAPI converte esse JSON num objeto EventoCreate (um schema Pydantic):
+
+python
+dados = EventoCreate(nome="Davi é coroado", descricao="Unção como rei")
+.dict() converte esse objeto num dicionário Python:
+
+python
+{
+  "nome": "Davi é coroado",
+  "descricao": "Unção como rei"
+}
+** desempacota o dicionário em argumentos nomeados:
+
+python
+Evento(nome="Davi é coroado", descricao="Unção como rei")
+🔄 Esse objeto Evento é do tipo SQLModel, pronto pra ser salvo com:
+
+python
+session.add(novo)
+session.commit()
+🧪 Tradução mental da linha:
+python
+novo = Evento(**dados.dict())
+“Crie um novo Evento, usando os campos recebidos da requisição como argumentos nomeados.”

@@ -10,6 +10,9 @@ class EventoBase(BaseModel):
 class EventoCreate(EventoBase):
     pass # Herda tudo de EventoBase
 
+class EventoUpdate(EventoBase):
+    pass
+
 class EventoRead(EventoBase):
     id : int # Tudo do evento Base mais o id
 

@@ -93,3 +93,90 @@ session : Session é so para indicar que session é do tipo sessão
 Parte do código	O que faz?
 Depends(get_session)	Chama a função get_session() e injeta o resultado
 session: Session = Depends(...)	Diz: “esse parâmetro vai receber algo do tipo Session”
+
+
+
+🌐 Estrutura da API com FastAPI + SQLModel
+🔧 Arquitetura
+models/: Onde ficam os modelos do banco (com table=True)
+
+schemas/: Modelos de entrada/saída com BaseModel (validação e controle)
+
+routes/: Arquivos com as rotas da API (agrupadas por recurso)
+
+database.py: Onde é criada a engine e a função get_session()
+
+main.py: Ponto inicial da aplicação (instância do FastAPI, rotas, criação do banco)
+
+🧱 SQLModel e Field(...)
+Field(...) é usado quando:
+
+Define PK: primary_key=True
+
+Define FK: foreign_key="tabela.coluna"
+
+Define valor padrão ou metadados extras (default=, description=, etc)
+
+Exemplo:
+
+python
+id: Optional[int] = Field(default=None, primary_key=True)
+🔗 Relacionamentos (Relationship())
+✔️ Um-para-muitos e Muitos-para-muitos:
+Use Relationship() com back_populates espelhando o nome do campo do outro lado.
+
+✔️ Quando há duas FKs para a mesma tabela:
+Use sa_relationship_kwargs={"foreign_keys": "[Classe.campo]"} para evitar ambiguidade.
+
+🧠 Injeção de Dependências com Depends
+O que é?
+O FastAPI chama automaticamente funções auxiliares (como get_session()) e injeta o resultado como argumento da função de rota.
+
+Exemplo:
+
+python
+def get_session():
+    return Session(engine)
+
+@router.get("/")
+def listar(session: Session = Depends(get_session)):
+    ...
+📤 Rotas com FastAPI
+Criando um personagem:
+python
+@router.post("/", status_code=201)
+def criar(dados: PersonagemCreate, session: Session = Depends(get_session)):
+    novo = Personagem(**dados.dict())
+    session.add(novo)
+    session.commit()
+    session.refresh(novo)
+    return novo
+Listando todos os personagens:
+python
+@router.get("/", response_model=List[Personagem])
+def listar(session: Session = Depends(get_session)):
+    return session.query(Personagem).all()
+🧩 Tipagem e clareza
+session: Session: é anotação de tipo
+
+Facilita autocomplete, documentação Swagger e leitura
+
+List[Objeto]: indica que a rota retorna uma lista de objetos daquele tipo
+
+Optional[str] = None: campo opcional com valor padrão
+
+🛠️ Dicas bônus
+Sempre importe seus models no main.py pra garantir que as tabelas sejam registradas e criadas com create_all()
+
+Nunca repita o nome de um campo (conflitos) em dois lugares com tipos diferentes
+
+Use TYPE_CHECKING quando quiser evitar importações circulares entre modelos
+
+Se quiser, posso gerar isso num .md, .txt ou até transformar em página bonita explicativa depois 😄
+
+Prontinha pra próxima aventura? Vamos codar mais uma funcionalidade? 🚀💻📘
+
+
+**dados.dict()	Converte um schema em argumentos para criar objeto ORM
+response_model=List[...]	Define o formato da resposta da rota
+session.query(Model).all()	Consulta todos os registros de uma tabela do banco

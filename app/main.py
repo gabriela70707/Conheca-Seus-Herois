@@ -23,7 +23,7 @@ app = FastAPI() #instancia do fastapi
 #Essa função é executada automaticamente quando o servidor inicia.
 @app.on_event("startup") #garante que o banco e as tabelas vão ser criados quando o app iniciar
 def on_startup():
-    criar_banco() # se as tabelas já exixtirem ele ignora se nao ele cria :) 
+    criar_banco() # se as tabelas já existirem ele ignora se nao ele cria :) 
 
 @app.get("/")
 def root():

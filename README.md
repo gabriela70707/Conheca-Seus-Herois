@@ -6,3 +6,5 @@ conferir a logica
 ver onde encaixar o power BI
 fazer autenticação 
 cadastrar os personagens
+cadastrar eventos
+cadastrar emblemas

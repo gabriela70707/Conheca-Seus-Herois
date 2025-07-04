@@ -15,7 +15,16 @@ from app.models import (
 
 
 from app.database import criar_banco
-from app.routes import personagens, eventos, personagem_evento, emblemas, conflitos
+from app.routes import (
+    personagens,
+    eventos,
+    emblemas,
+    conflitos,
+    relacionamento_personagem,
+    personagem_evento,
+    personagem_emblema,
+    personagem_conflito
+)
 
 
 app = FastAPI() #instancia do fastapi
@@ -35,3 +44,6 @@ app.include_router(eventos.router)
 app.include_router(personagem_evento.router)
 app.include_router(emblemas.router)
 app.include_router(conflitos.router)
+app.include_router(personagem_conflito.router)
+app.include_router(personagem_emblema.router)
+app.include_router(relacionamento_personagem.router)

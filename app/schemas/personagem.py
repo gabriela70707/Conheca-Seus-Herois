@@ -18,3 +18,7 @@ class PersonagemUpdate(BaseModel):  #shema de update
     genealogia: Optional[str] = None 
     licoes: Optional[str] = None # ele falando sobre as lições que aprendeu
     livro_principal: Optional[str] = None #livro principal que sua historia é contada
+
+class PersonagemRead(PersonagemCreate):
+    id : int
+    

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from sqlmodel import Session
 from app.database import get_session
 from app.models.personagem import Personagem
-from app.schemas.personagem import PersonagemCreate, PersonagemUpdate
+from app.schemas.personagem import PersonagemCreate, PersonagemUpdate, PersonagemRead
 from typing import List
 
 router = APIRouter(prefix="/personagens")
@@ -15,9 +15,17 @@ def criar_personagem(dados: PersonagemCreate, session: Session = Depends(get_ses
     session.refresh(novo)
     return novo
 
-@router.get("/", response_model = List[Personagem])
+@router.get("/", response_model = List[PersonagemRead])
 def listar_personagem(session : Session = Depends(get_session)):
     return session.query(Personagem).all()
+
+
+@router.get("/{id}", response_model = PersonagemRead)
+def buscar_personagem(id: int, session : Session = Depends(get_session)):
+    personagem = session.get(Personagem, id)
+    if not personagem:
+        raise HTTPException(status_code = 404, detail = "Personagem não encontrado")
+    return personagem
 
 
 @router.put("/{id}")

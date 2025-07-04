@@ -216,3 +216,7 @@ session.commit()
 python
 novo = Evento(**dados.dict())
 “Crie um novo Evento, usando os campos recebidos da requisição como argumentos nomeados.”
+
+
+Schemas entrada e saida de dados
+Consultar uma informação é no banco de dados 

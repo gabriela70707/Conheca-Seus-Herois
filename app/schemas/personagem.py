@@ -29,3 +29,6 @@ class PersonagemRead(PersonagemCreate):
 # cartinha do usuario
 class PersonagemCartinha(PersonagemRead):
     emblemas : List[EmblemaRead] = []
+
+    class Config:
+        orm_mode = True

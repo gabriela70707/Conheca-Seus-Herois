@@ -392,3 +392,31 @@ Evitar from ... import ... no topo	Faça o import no final do arquivo
 SQLModel entende isso?	Sim, perfeitamente!
 
 Faça a importação tardia em apenas um dos arquivos sendo ele aquele que precisa realmente acessar a outra classe diretamente (sem usar string).
+
+🧠 Como decidir onde fazer a importação tardia?
+✅ Use "NomeDaClasse" como string nos dois arquivos:
+Isso já resolve o problema de referência circular para o SQLModel.
+
+🔁 Mas se você precisar usar a classe diretamente (ex: para tipagem, validação, ou testes), aí sim você faz a importação tardia no final do arquivo.
+📌 No seu caso:
+Em quiz.py:
+Você pode deixar assim:
+
+python
+perguntas: List["Pergunta"] = Relationship(back_populates="quiz")
+E no final do arquivo:
+
+python
+from app.models.pergunta import Pergunta  # ← importação tardia aqui
+Em pergunta.py:
+Você também pode usar:
+
+python
+quiz: Optional["Quiz"] = Relationship(back_populates="perguntas")
+E não precisa importar Quiz diretamente se não estiver usando ela fora do relacionamento.
+
+✅ Conclusão
+Arquivo	Importação tardia necessária?	Por quê?
+quiz.py	✅ Sim	Porque ele precisa saber o que é Pergunta para o relacionamento funcionar
+pergunta.py	❌ Não	Só usa "Quiz" como string, o que já é suficiente
+

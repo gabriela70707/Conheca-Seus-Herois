@@ -23,3 +23,4 @@ cadastrar emblemas
 como os usuarios interagem com os seus emblemas 
 
 - permitir que o usuario coloque eventos marcantes da sua vida com Deus 
+- Adicionar o pytest

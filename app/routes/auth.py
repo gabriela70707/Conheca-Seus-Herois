@@ -10,8 +10,8 @@ router = APIRouter()
 @router.post("/login",  response_model=Token)
 def login(dados : LoginData, session : Session = Depends(get_session)):
     usuario = session.query(Usuario).filter(Usuario.email == dados.email).first()
-    if not usuario or not verificar_senha(dados.senha, usuario.senha_hast):
+    if not usuario or not verificar_senha(dados.senha, usuario.senha_hash):
         raise HTTPException(status_code=400, detail="Credenciais inválidas")
     
     token = criar_token_jwt({"sub":str(usuario.id)})
-    return {"acess_token" : token, "token_type": "bearer"}
+    return {"access_token" : token, "token_type": "bearer"}

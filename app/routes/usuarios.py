@@ -8,6 +8,7 @@ from app.security import hash_senha
 
 router = APIRouter(prefix="/usuarios")
 
+#criar um novo usuario
 @router.post("/", response_model=UsuarioRead, status_code=status.HTTP_201_CREATED)
 def registrar_usuario(dados : UsuarioCreate, session : Session = Depends(get_session)):
     #verificando se o email já esta em uso:

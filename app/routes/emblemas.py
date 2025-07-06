@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlmodel import Session
 from app.database import get_session
+from app.security import get_current_user
 from app.models.emblema import Emblema
+from app.models.usuario import Usuario
 from app.schemas.emblema import EmblemaCreate, EmblemaRead, EmblemaUpdate
 from typing import List
 
@@ -57,3 +59,13 @@ def deletar_emblema(id:int, session: Session = Depends(get_session)):
     session.delete(emblema)
     session.commit()
     return {"mensagem":"Emblema removido com sucesso"}
+
+
+#listar os emblemas do usuario logado 
+@router.get("/me", response_model=List[EmblemaRead])
+def listar_emblemas_do_personagem(usuario : Usuario = Depends(get_current_user), session : Session = Depends(get_session)):
+    personagem = usuario.personagem
+    if not personagem:
+        raise HTTPException(status_code=404, detail="Usuario não tem personagem")
+    emblemas = [vinculo.emblema for vinculo in personagem.emblemas if vinculo.emblema is not None] #garante que so vai haver emblemas diferentes de noneS
+    return emblemas

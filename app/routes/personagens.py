@@ -2,8 +2,10 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from sqlmodel import Session
 from app.database import get_session
 from app.models.personagem import Personagem
-from app.schemas.personagem import PersonagemCreate, PersonagemUpdate, PersonagemRead
+from app.models.usuario import Usuario
+from app.schemas.personagem import PersonagemCreate, PersonagemUpdate, PersonagemRead, PersonagemCartinha
 from typing import List
+from app.security import get_current_user
 
 router = APIRouter(prefix="/personagens")
 
@@ -61,6 +63,21 @@ def deletar_personagem(id: int, session : Session = Depends(get_session)):
     session.delete(personagem)
     session.commit()
     return
+
+# permitir ao usuario acessar sua carinha
+@router.get("/me", response_model=PersonagemCartinha)
+def obter_meu_personagem(usuario : Usuario = Depends(get_current_user), session : Session = Depends(get_session)):
+    personagem = usuario.personagem
+    if not personagem:
+        raise HTTPException(status_code=404, detail="O Usuario ainda nao tem personagem")
+
+    #garante que os emblemas sejam carregados
+    personagem.emblemas = [vinculo for vinculo in personagem.emblemas if vinculo.emblema is not None]
+
+    return personagem
+
+
+
 
 '''
 

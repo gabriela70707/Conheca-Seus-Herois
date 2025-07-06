@@ -12,7 +12,7 @@ cadastrar emblemas
 - fazer a logica da imagem da cartinha do usuario 
 - pensar na relação que o usuario podia ter com a conta dele dentro do sistema 
 - separar as imagens dos personagens 
-
+- Ver o atualizar
 
 
 - possiveis ideias:
@@ -21,3 +21,5 @@ cadastrar emblemas
 
 - tenho que pensar :
 como os usuarios interagem com os seus emblemas 
+
+- permitir que o usuario coloque eventos marcantes da sua vida com Deus 

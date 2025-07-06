@@ -14,6 +14,10 @@ class Personagem(SQLModel, table = True): #o nome da tabela é o nome da classe 
     genealogia: Optional[str] = None
     licoes: Optional[str] = None
     livro_principal: Optional[str] = None
+    usuario_id: Optional[int] = Field(default=None, foreign_key="usuario.id")
+
+    #relação 1:1
+    usuario : Optional["Usuario"] = Relationship(back_populates="personagem")
 
     # Cada personagem pode ter vários emblemas; esse campo retorna todos os vínculos dele
     emblemas: List[PersonagemEmblema] = Relationship(back_populates = "personagem")

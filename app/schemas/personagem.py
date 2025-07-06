@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
+from app.schemas.emblema import EmblemaRead
 
 class PersonagemCreate(BaseModel):
     nome:str #ex: Davi
@@ -22,3 +23,9 @@ class PersonagemUpdate(BaseModel):  #shema de update
 class PersonagemRead(PersonagemCreate):
     id : int
     
+    class Config:
+        orm_mode = True
+
+# cartinha do usuario
+class PersonagemCartinha(PersonagemRead):
+    emblemas : List[EmblemaRead] = []

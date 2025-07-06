@@ -220,3 +220,175 @@ novo = Evento(**dados.dict())
 
 Schemas entrada e saida de dados
 Consultar uma informação é no banco de dados 
+
+
+
+06/07/25 - duvidas 
+- o que seria um token do tipo bearer? - quando uma função tem essa sintaxe por exemplo : "-> str" significa que ela vai retornar o tipo que esta na frente 
+da setinha? nesse caso um string 
+
+- pq precisamos decodificar o token? - o que de fato o token guarda nele? 
+
+- o que essa linha faz? oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login") 
+
+- pq payload? 
+
+- essa parte pega o horario do momento em que o token é gerado? datetime.utcnow()
+
+- pq precisamos copiar os dados e nao so usar eles como vem? dados_para_token = dados.copy()
+
+ - o que jwt.encode e decode significa?
+
+ respostas as duvidas:
+
+ 🔐 1. O que é um token do tipo Bearer?
+Bearer é um tipo de token de autenticação usado em APIs. Quando o cliente (frontend ou Postman) envia uma requisição para uma rota protegida, ele envia o token assim:
+
+Authorization: Bearer <seu_token_aqui>
+“Bearer” significa literalmente “portador”
+
+A API entende: “quem está portando esse token tem permissão para acessar”
+
+➡️ 2. O que significa -> str?
+Sim! Isso é uma anotação de tipo em Python.
+
+python
+def criar_token_jwt(dados: dict) -> str:
+Significa:
+
+“Essa função recebe um dict e retorna uma str.”
+
+É só uma dica para o desenvolvedor (e para ferramentas como o VS Code), não muda o comportamento da função.
+
+🔓 3. Por que precisamos decodificar o token?
+Porque o token JWT é uma string codificada com informações dentro. Quando o usuário envia o token, precisamos ler o que tem dentro dele — como o ID do usuário, por exemplo.
+
+Sem decodificar, ele seria só uma sequência de caracteres ilegível como:
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+📦 4. O que o token guarda dentro dele?
+Um token JWT guarda um “pacote” de informações chamado payload. No nosso caso, ele guarda:
+
+json
+{
+  "sub": "5",         // ID do usuário
+  "exp": 1720000000   // Data de expiração (timestamp)
+}
+Você pode guardar o que quiser dentro do token (com moderação), mas o mais comum é:
+
+sub → subject (quem é o dono do token)
+
+exp → expiration (quando o token expira)
+
+🔐 5. O que faz essa linha?
+python
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
+Ela cria um “esquema de autenticação” que:
+
+Espera um token do tipo Bearer no cabeçalho
+
+Usa a URL /login como ponto de entrada para obter o token
+
+Depois, você usa isso em qualquer rota com:
+
+python
+token: str = Depends(oauth2_scheme)
+E ele automaticamente extrai o token da requisição.
+
+📦 6. Por que o nome payload?
+“Payload” é um termo comum em computação que significa:
+
+“A carga útil de uma mensagem” — ou seja, o conteúdo real que importa.
+
+No JWT, o payload é a parte que guarda os dados do usuário (como o ID).
+
+🕒 7. O que faz datetime.utcnow()?
+Sim! Ele pega a data e hora atual em UTC (tempo universal coordenado). Usamos isso para definir quando o token vai expirar:
+
+python
+expiracao = datetime.utcnow() + timedelta(minutes=60)
+Ou seja: o token vai expirar em 60 minutos a partir de agora.
+
+📋 8. Por que usamos dados.copy()?
+Porque vamos modificar o dicionário original adicionando a expiração:
+
+python
+dados_para_token = dados.copy()
+dados_para_token.update({"exp": expiracao})
+Se usássemos o dados original diretamente, estaríamos alterando o dicionário original que foi passado — o que pode causar efeitos colaterais indesejados.
+
+🔐 9. O que significam jwt.encode e jwt.decode?
+Essas são as funções da biblioteca python-jose que:
+
+jwt.encode(...) → transforma um dicionário em um token JWT (string)
+
+jwt.decode(...) → lê um token JWT e extrai o dicionário original
+
+Exemplo:
+
+python
+token = jwt.encode({"sub": "5"}, SECRET_KEY, algorithm="HS256")
+# token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+
+dados = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+# dados = {"sub": "5"}
+
+
+
+porque preciso tranformar em string o id para mandar para o token ?  token = criar_token_jwt({"sub":str(usuario.id)})
+🔍 Por que usamos str(usuario.id) no token?
+A resposta curta é: porque o JWT espera que os valores no payload sejam serializáveis em JSON — e o JSON só aceita strings como chaves e valores simples como str, int, bool, etc.
+
+🧠 O que é o sub?
+sub é uma convenção no JWT que significa subject (quem é o dono do token)
+
+Ele pode ser qualquer identificador único do usuário
+
+A especificação do JWT recomenda que seja uma string
+
+🔧 O que acontece se você mandar um int?
+Na prática, o jwt.encode() até aceita um int como valor. Mas ao fazer isso:
+
+python
+token = criar_token_jwt({"sub": usuario.id})  # int
+Você pode acabar com inconsistências depois, por exemplo:
+
+Ao decodificar, o valor pode vir como string dependendo da lib
+
+Comparações como int(payload["sub"]) == usuario.id podem falhar se não forem tratadas
+
+✅ Por isso usamos:
+python
+token = criar_token_jwt({"sub": str(usuario.id)})
+E depois, ao decodificar:
+
+python
+usuario_id = int(payload["sub"])
+Assim você garante:
+
+Que o token é compatível com o padrão JWT
+
+Que o valor pode ser convertido de volta com segurança
+
+🧪 Exemplo
+python
+# No login
+token = criar_token_jwt({"sub": "5"})  # string
+
+# Depois, ao usar o token
+payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+usuario_id = int(payload["sub"])  # converte de volta pra int
+✅ Em resumo
+| Por quê? | Porque o JWT espera strings no payload, e sub é uma string por convenção | | O que ganhamos? | Compatibilidade, clareza e segurança na hora de decodificar |
+
+
+Arrumando importação circular 
+.
+
+🧠 Em resumo:
+O que fazer	Como
+Evitar import circular	Use "NomeDaClasse" como string
+Evitar from ... import ... no topo	Faça o import no final do arquivo
+SQLModel entende isso?	Sim, perfeitamente!
+
+Faça a importação tardia em apenas um dos arquivos sendo ele aquele que precisa realmente acessar a outra classe diretamente (sem usar string).

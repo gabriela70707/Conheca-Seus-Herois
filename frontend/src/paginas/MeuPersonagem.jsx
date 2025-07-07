@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
+  color: black;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -17,6 +18,7 @@ const Cartinha = styled.div`
   max-width: 500px;
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
   text-align: center;
+
 
   img {
     width: 100%;
@@ -71,7 +73,7 @@ const Galeria = styled.div`
 `;
 
 const Mensagem = styled.p`
-  color: white;
+  color: aqua;
   text-align: center;
   margin-top: 4rem;
   font-size: 1.2rem;

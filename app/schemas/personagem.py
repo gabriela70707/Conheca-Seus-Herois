@@ -22,6 +22,7 @@ class PersonagemUpdate(BaseModel):  #shema de update
 
 class PersonagemRead(PersonagemCreate):
     id : int
+    usuario_id : Optional[int] = None
     
     class Config:
         orm_mode = True

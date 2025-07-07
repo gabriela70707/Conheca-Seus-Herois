@@ -47,6 +47,16 @@ const DetalhePersonagem = () => {
   const [personagem, setPersonagem] = useState(null);
   const [erro, setErro] = useState(null);
 
+  const [emblemas, setEmblemas] = useState([]);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/personagens-emblemas/personagem/${id}/emblemas`)
+      .then(res => res.json())
+      .then(data => setEmblemas(data))
+      .catch(err => console.error("Erro ao carregar emblemas:", err));
+  }, [id]);
+
+
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/personagens/${id}`)
       .then(async (res) => {
@@ -68,6 +78,29 @@ const DetalhePersonagem = () => {
       <Cartao>
         {personagem.imagem && <img src={personagem.imagem} alt={personagem.nome} />}
         <h2>{personagem.nome}</h2>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap', marginTop: '1rem' }}>
+          {emblemas.map((e) => (
+            <div key={e.id} title={e.nome}>
+              <img
+                src={e.icone_url}
+                alt={e.nome}
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  objectFit: 'cover',
+                  borderRadius: '50%',
+                  border: '2px solid gold',
+                  boxShadow: '0 0 6px rgba(255, 204, 112, 0.6)',
+                  transition: 'transform 0.2s',
+                }}
+                onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+                onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+              />
+            </div>
+          ))}
+        </div>
+
+
         <p><strong>História:</strong> {personagem.historia}</p>
         <p><strong>Período:</strong> {personagem.periodo}</p>
         <p><strong>Genealogia:</strong> {personagem.genealogia}</p>

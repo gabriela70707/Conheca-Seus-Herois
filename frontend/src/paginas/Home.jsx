@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import Card from '../componentes/Card';
 import ConviteCard from '../componentes/ConviteCard';
 import ConviteFinal from '../componentes/ConviteFinal';
@@ -34,6 +35,24 @@ const Home = () => {
   const { personagens, loading } = usePersonagens();
   const [usuarioPersonagem, setUsuarioPersonagem] = useState(null);
   const token = localStorage.getItem('token');
+  const [quizzes, setQuizzes] = useState([]);
+  const [emblemasUsuario, setEmblemasUsuario] = useState([]);
+  const [mostrarQuizzes, setMostrarQuizzes] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (usuarioPersonagem) {
+      fetch(`${import.meta.env.VITE_API_URL}/quizzes/publicos`)
+        .then(res => res.json())
+        .then(data => setQuizzes(data));
+
+      fetch(`${import.meta.env.VITE_API_URL}/emblemas/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then(res => res.json())
+        .then(data => setEmblemasUsuario(data.map(e => e.id)));
+    }
+  }, [usuarioPersonagem]);
 
   useEffect(() => {
     if (token) {
@@ -48,11 +67,12 @@ const Home = () => {
 
   if (loading) return <p style={{ color: 'white', textAlign: 'center' }}>Carregando personagens...</p>;
 
-  //Evitar duplicação da cartinha do usuario
-  const personagensFiltrados = usuarioPersonagem
-  ? personagens.filter(p => p.id !== usuarioPersonagem.id)
-  : personagens;
-
+  let personagensFiltrados;
+  if (usuarioPersonagem) {
+    personagensFiltrados = personagens.filter(p => p.id !== usuarioPersonagem.id);
+  } else {
+    personagensFiltrados = personagens.filter(p => !p.usuario_id);
+  }
 
   return (
     <AppWrapper>
@@ -61,12 +81,20 @@ const Home = () => {
       {usuarioPersonagem && (
         <section style={{ marginBottom: '2rem', textAlign: 'center' }}>
           <h2 style={{ color: 'white' }}>Sua cartinha:</h2>
-          <Card
-            id={usuarioPersonagem.id}
-            nome={usuarioPersonagem.nome}
-            imagem={usuarioPersonagem.imagem}
-            destaque
-          />
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
+            <Card
+              id={usuarioPersonagem.id}
+              nome={usuarioPersonagem.nome}
+              imagem={usuarioPersonagem.imagem}
+              destaque
+            />
+            <div>
+              <button onClick={() => navigate('/quizzes')}>
+                📘 Ver todos os quizzes
+              </button>
+
+            </div>
+          </div>
         </section>
       )}
 

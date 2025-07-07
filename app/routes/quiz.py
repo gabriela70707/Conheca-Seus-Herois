@@ -81,6 +81,7 @@ def responder_quiz(
     nota = acertos / total if total > 0 else 0 #se total for maior que 0 calcula se nao é 0
 
     emblema_ganho = None
+    ja_tinha_emblema = False
 
     # Se acertou 70% ou mais, ganha o emblema
     if nota >= 0.7 and quiz.emblema_id:
@@ -91,7 +92,9 @@ def responder_quiz(
         #verifica se o personagem já tem esse emblema
         ja_tem = session.exec(select(PersonagemEmblema).where(PersonagemEmblema.personagem_id == personagem.id, PersonagemEmblema.emblema_id == quiz.emblema_id)).first()
         
-        if not ja_tem:
+        if ja_tem:
+            ja_tinha_emblema = True
+        else:
             vinculo = PersonagemEmblema(
                 personagem_id = personagem.id,
                 emblema_id = quiz.emblema_id
@@ -105,8 +108,18 @@ def responder_quiz(
         "acertos" : acertos,
         "total" : total,
         "nota": round(nota * 100, 2),
-        "emblema_ganho": emblema_ganho
+        "emblema_ganho": emblema_ganho,
+        "ja_tinha_emblema" : ja_tinha_emblema
     }
+
+#mostra as perguntas e alternativas de um quiz em especifico
+@router.get("/quizzes/{quiz_id}/responder", response_model=QuizPublico)
+def obter_quiz_para_responder(quiz_id: int, session: Session = Depends(get_session)):
+    quiz = session.get(Quiz, quiz_id)
+    if not quiz:
+        raise HTTPException(status_code=404, detail="Quiz não encontrado")
+    return quiz
+
 
 """
 Exemplo de requisição para a criação do quiz:

@@ -5,6 +5,8 @@ import Registro from './paginas/Registro';
 import Login from './paginas/Login';
 import MeuPersonagem from './paginas/MeuPersonagem';
 import DetalhePersonagem from './paginas/DetalhePersonagem'
+import QuizResponder from './componentes/QuizResponder';
+import ListaQuizzes from './componentes/ListarQuizzes';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <Route path="/login" element={<Login />}/>
         <Route path="/me/personagem" element={<MeuPersonagem />}/>
         <Route path="/personagem/:id" element={<DetalhePersonagem />}/>
+        <Route path="/quiz/:id" element={<QuizResponder />}/>
+        <Route path="/quizzes" element={<ListaQuizzes />}/>
       </Routes>
   );
 }

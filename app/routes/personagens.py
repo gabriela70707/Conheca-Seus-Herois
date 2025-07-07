@@ -19,7 +19,7 @@ def criar_personagem(dados: PersonagemCreate, session: Session = Depends(get_ses
 
 @router.get("/", response_model = List[PersonagemRead])
 def listar_personagem(session : Session = Depends(get_session)):
-    return session.query(Personagem).all()
+    return session.query(Personagem).filter(Personagem.usuario_id == None).all()
 
 
 @router.get("/{id}", response_model = PersonagemRead)

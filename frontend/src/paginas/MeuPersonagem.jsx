@@ -86,6 +86,16 @@ const MeuPersonagem = () => {
   const [imagensDisponiveis, setImagensDisponiveis] = useState([]);
   const token = localStorage.getItem('token');
 
+  const [quizzes, setQuizzes] = useState([]);
+
+useEffect(() => {
+  fetch(`${import.meta.env.VITE_API_URL}/quizzes/publicos`)
+    .then(res => res.json())
+    .then(data => setQuizzes(data))
+    .catch(err => console.error("Erro ao carregar quizzes:", err));
+}, []);
+
+
   useEffect(() => {
     if (!token) {
       setErro('Você precisa estar logado para ver sua cartinha.');
@@ -192,6 +202,7 @@ const MeuPersonagem = () => {
             <button onClick={() => setEditando(true)}>Editar cartinha</button>
           </>
         )}
+        
       </Cartinha>
     </Wrapper>
   );

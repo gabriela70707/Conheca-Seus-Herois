@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Card from "../componentes/Card";
 import ConviteCard from "../componentes/ConviteCard";
 import ConviteFinal from "../componentes/ConviteFinal";
@@ -34,19 +34,15 @@ const AppWrapper = styled.div`
     z-index: 1;
   }
 
-  .meu-personagem{
+  .meu-personagem {
     display: flex;
     gap: 5vw;
+    flex-wrap: wrap;
   }
 
-  .quizzes{
-    display-grid;
-    width: 15vw;
-  }
-
-  .edicao{
+  .quizzes, .edicao, .personagem-aleatorio {
     display: grid;
-    width: 15svw;
+    width: 15vw;
   }
 `;
 
@@ -55,6 +51,7 @@ const Home = () => {
   const [usuarioPersonagem, setUsuarioPersonagem] = useState(null);
   const [quizzes, setQuizzes] = useState([]);
   const [emblemasUsuario, setEmblemasUsuario] = useState([]);
+  const [personagemSorteado, setPersonagemSorteado] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -67,9 +64,16 @@ const Home = () => {
     setOpenModal(true);
     setTimeout(() => {
       localStorage.removeItem("token");
-      setOpenModal(false); // opcional: fechar modal
-      navigate(0); // recarrega a página e reexecuta os useEffect
+      setOpenModal(false);
+      navigate(0); // força reload
     }, 2000);
+  };
+
+  const sortearPersonagem = () => {
+    const lista = personagensFiltrados;
+    if (lista.length === 0) return;
+    const aleatorio = lista[Math.floor(Math.random() * lista.length)];
+    setPersonagemSorteado(aleatorio);
   };
 
   useEffect(() => {
@@ -113,19 +117,8 @@ const Home = () => {
     <AppWrapper>
       {!usuarioPersonagem && <ConviteCard />}
 
-      <Dialog
-        open={openModal}
-        style={{
-          borderRadius: "5rem",
-          display: "grid",
-          alignItems: "center",
-          justifyItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <DialogTitle>
-          <strong>Até breve!</strong>{" "}
-        </DialogTitle>
+      <Dialog open={openModal}>
+        <DialogTitle><strong>Até breve!</strong></DialogTitle>
         <DialogContent>{mensagemSaida}</DialogContent>
       </Dialog>
 
@@ -134,42 +127,31 @@ const Home = () => {
           <h2 style={{ color: "white" }}>Sua cartinha:</h2>
           <ButtonSair onLogout={handleLogout} />
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "2rem",
-              flexWrap: "wrap",
-            }}
-          >
+          <div style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "2rem",
+            flexWrap: "wrap",
+          }}>
             <div className="meu-personagem">
               <div className="quizzes">
-                <p>
-                  <strong>
-                    Conquiste seus emblemas realizando quizzes e teste seus
-                    conhecimentos:
-                  </strong>
-                </p>
+                <p><strong>Conquiste seus emblemas realizando quizzes:</strong></p>
                 <button onClick={() => navigate("/quizzes")}>
                   Ver todos os quizzes
                 </button>
               </div>
 
               <div className="edicao">
-                <p>
-                  <strong>Edite seu personagem a qualquer momento:</strong>
-                </p>
+                <p><strong>Edite seu personagem:</strong></p>
                 <button onClick={() => navigate("/me/personagem")}>
                   Editar Minha Cartinha
                 </button>
               </div>
 
               <div className="personagem-aleatorio">
-                <p>
-                  <strong>Sorteie um personagem e o conheça:</strong>
-                </p>
-                <button onClick={() => navigate("/me/personagem")}>
+                <p><strong>Sorteie um personagem:</strong></p>
+                <button onClick={sortearPersonagem}>
                   Conhecer um personagem
                 </button>
               </div>
@@ -181,14 +163,31 @@ const Home = () => {
       <h2 style={{ textAlign: "center", color: "white" }}>
         Conheça seus heróis:
       </h2>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "1rem",
-          justifyContent: "center",
-        }}
-      >
+
+      {/* Personagem sorteado */}
+      {personagemSorteado && (
+        <section style={{ margin: "2rem 0", textAlign: "center" }}>
+          <h3 style={{ color: "white" }}>Conheça o(a):</h3>
+          <Link
+            to={`/personagem/${personagemSorteado.id}`}
+            style={{ textDecoration: "none", cursor: "pointer" }}
+          >
+            <Card
+              id={personagemSorteado.id}
+              nome={personagemSorteado.nome}
+              imagem={personagemSorteado.imagem}
+            />
+          </Link>
+        </section>
+      )}
+
+      {/* Lista de personagens */}
+      <div style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "1rem",
+        justifyContent: "center",
+      }}>
         {usuarioPersonagem && (
           <Card
             id={usuarioPersonagem.id}

@@ -38,7 +38,7 @@ const Cartinha = styled.div`
   border-radius: 16px;
   max-width: 500px;
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
-  text-align: center;
+    text-align: center;
 
 
   img {

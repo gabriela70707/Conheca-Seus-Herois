@@ -28,8 +28,8 @@ const Wrapper = styled.div`
     position: relative; 
     z-index: 1; 
   } 
-  `; 
- 
+  `;
+
 
 const Perfil = styled.div` 
   display: flex; 
@@ -86,7 +86,7 @@ const Perfil = styled.div`
     }
   } 
 
-`; 
+`;
 
 const Informacoes = styled.div` 
   display: grid; 
@@ -94,15 +94,15 @@ const Informacoes = styled.div`
   justify-content: space-between; 
   grid-template-columns: 300px 750px; 
   height: 90vh; 
-`; 
+`;
 
 const Cartao = styled.div` 
   display: grid;
   justify-content: center;
-  border-radius: 16px; 
-  max-width: 700px; 
-  text-align: center; 
-  height: 90%; 
+  border-radius: 16px;
+  max-width: 700px;
+  text-align: center;
+  height: 90%;
   align-content: end;
 
   img { 
@@ -119,26 +119,46 @@ const Cartao = styled.div`
     color: black; 
   } 
 
-  .conteudo{
+.conteudo {
     border-radius: 16px;
     background-color: white;
     height: 65vh;
+    animation: slideFade 0.4s ease;
+    padding: 1rem;
   }
 
-  .botoes{
+  @keyframes slideFade {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+ .botoes {
     display: flex;
     gap: 3vw;
     height: 7vh;
     margin-bottom: 2rem;
 
-      button{
-        background-color: rgba(24, 96, 178, 0.88);
-        width: 12vw;
-      }
-  }
-`; 
+    button {
+      background-color: rgba(24, 96, 178, 0.3);
+      color: black;
+      width: 12vw;
+      transition: background-color 0.3s ease;
 
-  const Bio = styled.div` 
+      &.ativo {
+        background-color: rgba(24, 96, 178, 0.88);
+        color: white;
+      }
+    }
+  }
+`;
+
+const Bio = styled.div` 
     display: grid;
     background-color: white; 
     color: black; 
@@ -147,14 +167,14 @@ const Cartao = styled.div`
     border-radius: 16px; 
     justify-content: center;
     margin-left: 2vw;
-  `; 
+  `;
 
 const Mensagem = styled.p` 
   color: white; 
   text-align: center; 
   margin-top: 4rem; 
   font-size: 1.2rem; 
-`; 
+`;
 
 const DetalhePersonagem = () => {
   const { id } = useParams();
@@ -162,8 +182,9 @@ const DetalhePersonagem = () => {
   const [erro, setErro] = useState(null);
 
   const [emblemas, setEmblemas] = useState([]);
+  const [secaoAtiva, setSecaoAtiva] = useState('historia');
 
-  
+
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/personagens-emblemas/personagem/${id}/emblemas`)
       .then(res => res.json())
@@ -198,52 +219,78 @@ const DetalhePersonagem = () => {
             <h2>{personagem.nome}</h2>
           </div>
         </div>
-            <div className="emblemas">
-              <h2>Emblemas:</h2>
-              <div className="icones">
+        <div className="emblemas">
+          <h2>Emblemas:</h2>
+          <div className="icones">
 
-                {emblemas.map((e) => (
-                  <div key={e.id} title={e.nome}>
-                    <img
-                      src={e.icone_url}
-                      alt={e.nome}
-                      style={{
-                        width: '40px',
-                        height: '40px',
-                        objectFit: 'cover',
-                        borderRadius: '50%',
-                        transition: 'transform 0.2s',
-                      }}
-                      onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
-                      onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                      />
-                  </div>
-                ))}
-                
+            {emblemas.map((e) => (
+              <div key={e.id} title={e.nome}>
+                <img
+                  src={e.icone_url}
+                  alt={e.nome}
+                  style={{
+                    width: '40px',
+                    height: '40px',
+                    objectFit: 'cover',
+                    borderRadius: '50%',
+                    transition: 'transform 0.2s',
+                  }}
+                  onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+                  onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                />
               </div>
-            </div>
-        </Perfil>
-      
+            ))}
+
+          </div>
+        </div>
+      </Perfil>
+
       <Informacoes>
 
         <Bio>
           <p><strong>Genealogia:</strong> {personagem.genealogia}</p>
           <p><strong>Período:</strong> {personagem.periodo}</p>
+          <p><strong>Seguido Por:</strong></p>
         </Bio>
 
         <Cartao>
           <div className="botoes">
-            <button>Minha História</button>
-            <button>Eventos Marcantes</button>
-            <button>Lições</button>
+            <button
+              className={secaoAtiva === 'historia' ? 'ativo' : ''}
+              onClick={() => setSecaoAtiva('historia')}
+            >
+              Minha História
+            </button>
+            <button
+              className={secaoAtiva === 'eventos' ? 'ativo' : ''}
+              onClick={() => setSecaoAtiva('eventos')}
+            >
+              Eventos Marcantes
+            </button>
+            <button
+              className={secaoAtiva === 'licoes' ? 'ativo' : ''}
+              onClick={() => setSecaoAtiva('licoes')}
+            >
+              Lições
+            </button>
           </div>
+
           <div className="conteudo">
-            <p><strong>História:</strong> {personagem.historia}</p>
-            <p><strong>Lições:</strong> {personagem.licoes}</p>
-            <p><strong>Livro principal:</strong> {personagem.livro_principal}</p>
+            {secaoAtiva === 'historia' && (
+              <>
+                <p><strong>História:</strong> {personagem.historia}</p>
+                <p><strong>Livro principal:</strong> {personagem.livro_principal}</p>
+              </>
+            )}
+            {secaoAtiva === 'licoes' && (
+              <p><strong>Lições:</strong> {personagem.licoes}</p>
+            )}
+            {secaoAtiva === 'eventos' && (
+              <p><em>Eventos marcantes em construção…</em></p>
+            )}
           </div>
         </Cartao>
-        
+
       </Informacoes>
     </Wrapper>
   );

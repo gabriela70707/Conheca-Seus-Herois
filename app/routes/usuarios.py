@@ -29,7 +29,7 @@ def registrar_usuario(dados : UsuarioCreate, session : Session = Depends(get_ses
 
     personagem = Personagem(
         nome = usuario.nome,
-        historia= "Minha história com Deus",
+        historia= "Conte aqui, a sua história com Deus",
         usuario_id = usuario.id
     )
 

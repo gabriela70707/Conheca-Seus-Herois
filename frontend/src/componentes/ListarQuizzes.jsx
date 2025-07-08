@@ -21,6 +21,8 @@ const ListaQuizzes = () => {
     }
   }, []);
 
+  
+
   return (
     <div style={{ padding: '2rem' }}>
       <h2>🎯 Quizzes disponíveis</h2>
@@ -33,6 +35,7 @@ const ListaQuizzes = () => {
               onClick={() => navigate(`/quiz/${quiz.id}/`)}
               style={{
                 background: 'white',
+                color: 'black',
                 padding: '1rem',
                 borderRadius: '12px',
                 width: '200px',
@@ -42,7 +45,7 @@ const ListaQuizzes = () => {
               }}
             >
               <img
-                src={quiz.emblema?.imagem}
+                src={quiz.emblema?.icone_url}
                 alt={quiz.emblema?.nome}
                 style={{
                   width: '60px',

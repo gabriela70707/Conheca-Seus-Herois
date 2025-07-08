@@ -93,6 +93,9 @@ const Home = () => {
               <button onClick={() => navigate('/quizzes')}>
                 Ver todos os quizzes
               </button>
+              <button onClick={() => navigate('/me/personagem')}>
+                Editar Minha Cartinha
+              </button>
 
             </div>
           </div>

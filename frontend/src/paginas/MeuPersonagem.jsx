@@ -1,15 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,  } from 'react';
 import styled from 'styled-components';
+import fundo from '../assets/fundo.png'
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
-  color: black;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0,0,0,0.7);
-  padding: 2rem;
-`;
+  min-height: 100vh; 
+  max-width: 100vw; 
+  background-image: url(${fundo}); 
+  background-size: cover; 
+  background-position: center; 
+  background-attachment: fixed; 
+  position: relative; 
+  overflow: hidden; 
+  display: grid; 
+  justify-content: center; 
+  padding: 1rem; 
+
+    &::before { 
+    content: ''; 
+    position: absolute; 
+    inset: 0; 
+    background: rgba(0, 0, 0, 0.6); 
+    z-index: 0; 
+  } 
+
+  > * { 
+    position: relative; 
+    z-index: 1; 
+  } 
+  `; 
 
 const Cartinha = styled.div`
   background: white;
@@ -35,7 +54,7 @@ const Cartinha = styled.div`
   }
 
   button {
-    background-color: #ffcc70;
+    background-color:rgb(33, 96, 185);
     border: none;
     padding: 0.6rem 1rem;
     border-radius: 8px;
@@ -45,7 +64,7 @@ const Cartinha = styled.div`
   }
 
   button:hover {
-    background-color: #f9b64d;
+    background-color:rgb(19, 66, 133);
   }
 `;
 
@@ -67,8 +86,8 @@ const Galeria = styled.div`
   }
 
   img.selecionada {
-    border-color: #ffcc70;
-    box-shadow: 0 0 10px #ffcc70;
+    border-color:rgb(11, 26, 86);
+    box-shadow: 0 0 10px rgb(112, 145, 255);
   }
 `;
 
@@ -79,6 +98,19 @@ const Mensagem = styled.p`
   font-size: 1.2rem;
 `;
 
+const Informacoes = styled.div`
+  color: black;
+  text-align: center;
+  margin-top: 4rem;
+  font-size: 1rem;
+
+  .botoes{
+    display: flex;
+    gap: 1vw;
+    justify-content: center;
+  }
+
+`;
 
 const MeuPersonagem = () => {
   const [personagem, setPersonagem] = useState(null);
@@ -87,6 +119,7 @@ const MeuPersonagem = () => {
   const [form, setForm] = useState({});
   const [imagensDisponiveis, setImagensDisponiveis] = useState([]);
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   const [quizzes, setQuizzes] = useState([]);
 
@@ -170,10 +203,10 @@ useEffect(() => {
           <>
             <input name="nome" value={form.nome || ''} onChange={handleChange} placeholder="Nome" />
             <textarea name="historia" value={form.historia || ''} onChange={handleChange} placeholder="História" />
-            <input name="periodo" value={form.periodo || ''} onChange={handleChange} placeholder="Período" />
-            <input name="genealogia" value={form.genealogia || ''} onChange={handleChange} placeholder="Genealogia" />
-            <input name="licoes" value={form.licoes || ''} onChange={handleChange} placeholder="Lições" />
-            <input name="livro_principal" value={form.livro_principal || ''} onChange={handleChange} placeholder="Livro principal" />
+            <input name="periodo" value={form.periodo || ''} onChange={handleChange} placeholder="Período (Seu ano de Nascimento - Presente)" />
+            <input name="genealogia" value={form.genealogia || ''} onChange={handleChange} placeholder="Pessoas que te inspiram em sua vida com Deus" />
+            <input name="licoes" value={form.licoes || ''} onChange={handleChange} placeholder="Lições que aprendeu com o Senhor" />
+            <input name="livro_principal" value={form.livro_principal || ''} onChange={handleChange} placeholder="Seu versiculo favorito" />
 
             <div>
               <p><strong>Escolha uma imagem:</strong></p>
@@ -193,16 +226,19 @@ useEffect(() => {
             <button onClick={salvarEdicao}>Salvar</button>
           </>
         ) : (
-          <>
+          <Informacoes>
             {personagem.imagem && <img src={personagem.imagem} alt={personagem.nome} />}
             <h2>{personagem.nome}</h2>
-            <p><strong>História:</strong> {personagem.historia}</p>
+            <p><strong>Minha História com Deus:</strong> {personagem.historia}</p>
             <p><strong>Período:</strong> {personagem.periodo}</p>
-            <p><strong>Genealogia:</strong> {personagem.genealogia}</p>
-            <p><strong>Lições:</strong> {personagem.licoes}</p>
-            <p><strong>Livro:</strong> {personagem.livro_principal}</p>
-            <button onClick={() => setEditando(true)}>Editar cartinha</button>
-          </>
+            <p><strong>Pessoas que me inspiram na minha com Deus:</strong> {personagem.genealogia}</p>
+            <p><strong>Lições que aprendi com o Senhor:</strong> {personagem.licoes}</p>
+            <p><strong>Meu Versiculo Favorito:</strong> {personagem.livro_principal}</p>
+            <div className="botoes">
+              <button onClick={() => setEditando(true)}>Editar cartinha</button>
+              <button onClick={() => navigate('/')}>Voltar a Home</button>
+            </div>
+          </Informacoes>
         )}
         
       </Cartinha>

@@ -52,7 +52,7 @@ const Wrapper = styled.div`
   }
 
   button {
-    background-color: #ffcc70;
+    background-color:rgb(33, 96, 185);
     border: none;
     padding: 0.6rem;
     border-radius: 8px;
@@ -61,7 +61,18 @@ const Wrapper = styled.div`
   }
 
   button:hover {
-    background-color: #f9b64d;
+    background-color:rgb(19, 66, 133);
+  }
+
+  .logar{
+    color: black;
+    display: flex;
+    justify-content: center;
+
+    button{
+      background-color: transparent;
+      color: rgb(19, 66, 133);
+    }
   }
 `;
 
@@ -121,6 +132,12 @@ const Registro = () => {
           required
         />
         <button type="submit">Cadastrar</button>
+
+        <div className="logar">
+          <p>Já tem conta? </p>
+          <button onClick={() => {navigate("/login")}}>Login</button>
+        </div>
+
       </form>
     </Wrapper>
   );

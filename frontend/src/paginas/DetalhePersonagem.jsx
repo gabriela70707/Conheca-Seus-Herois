@@ -3,108 +3,158 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import fundo from '../assets/fundo.png'
 
-const Wrapper = styled.div`
-  min-height: 100vh;
-  max-width: 100vw;
-  background-image: url(${fundo});
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  position: relative;
-  overflow: hidden;
+const Wrapper = styled.div` 
+  min-height: 100vh; 
+  max-width: 100vw; 
+  background-image: url(${fundo}); 
+  background-size: cover; 
+  background-position: center; 
+  background-attachment: fixed; 
+  position: relative; 
+  overflow: hidden; 
+  display: grid; 
+  justify-content: center; 
+  padding: 1rem; 
+
+    &::before { 
+    content: ''; 
+    position: absolute; 
+    inset: 0; 
+    background: rgba(0, 0, 0, 0.6); 
+    z-index: 0; 
+  } 
+
+  > * { 
+    position: relative; 
+    z-index: 1; 
+  } 
+  `; 
+ 
+
+const Perfil = styled.div` 
+  display: flex; 
+  background-color: white; 
+  border-radius: 15px; 
+  padding: 3vh; 
+  color: black; 
+  width: 90vw; 
+  height: 20vh; 
+  align-items: center; 
+  justify-content: space-between; 
+
+  .personagem{ 
+    display: flex;   
+    align-items: center; 
+  } 
+
+  img { 
+    padding: 0 2vw; 
+    height: 20vh; 
+    border-radius: 50%; 
+  } 
+
+  .nome{ 
+    display: grid; 
+    font-size: 2vh; 
+    justify-items: start; 
+    height: 10vh; 
+
+    h2, p{ 
+      margin: 0; 
+      box-sizing: border-box; 
+    } 
+  }
+
+  .emblemas{
+    display: grid;
+    justify-items: center; 
+    width: 30vw;
+    margin-right: 7vw;
+    height: 80%;
+
+
+    .icones{
+      display: flex; 
+      justify-content: center; 
+      gap: 0.5rem;  
+      flex-wrap: wrap;  
+      margin-top: 0rem;  
+    }
+
+    h2{
+      font-size: 2.2vh;
+    }
+  } 
+
+`; 
+
+const Informacoes = styled.div` 
+  display: grid; 
+  align-items: end; 
+  justify-content: space-between; 
+  grid-template-columns: 300px 750px; 
+  height: 90vh; 
+`; 
+
+const Cartao = styled.div` 
   display: grid;
   justify-content: center;
-  padding: 1rem;
+  border-radius: 16px; 
+  max-width: 700px; 
+  text-align: center; 
+  height: 90%; 
+  align-content: end;
 
-    &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 0;
-  }
+  img { 
+    width: 100%; 
+    margin-bottom: 1rem; 
+  } 
 
-  > * {
-    position: relative;
-    z-index: 1;
-  }
+  h2 { 
+    color: black; 
+  } 
 
-  `;
+  p { 
+    margin: 0.5rem 0; 
+    color: black; 
+  } 
 
-  const Bio = styled.div`
-    background-color: white;
-    color: black;
-    height: 100%;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  .conteudo{
     border-radius: 16px;
-  `;
-
-const Perfil = styled.div`
-  display: flex;
-  background-color: white;
-  border-radius: 15px;
-  padding: 3vh;
-  color: black;
-  width: 90vw;
-  height: 20vh;
-  align-items: center;
-  justify-content: space-between;
-  
-  .personagem{
-    display: flex;  
+    background-color: white;
+    height: 65vh;
   }
 
-  img {
-    padding: 0 2vw;
-    height: 20vh;
-    border-radius: 50%;
+  .botoes{
+    display: flex;
+    gap: 3vw;
+    height: 7vh;
+    margin-bottom: 2rem;
+
+      button{
+        background-color: rgba(24, 96, 178, 0.88);
+        width: 12vw;
+      }
   }
-  
-  .nome{
+`; 
+
+  const Bio = styled.div` 
     display: grid;
-  }
-`;
-const Informacoes = styled.div`
-  display: grid;
-  align-items: center;
-  justify-content: space-between;
-  grid-template-columns: 200px 700px;
-  border: solid 2px red;
-  height: 100%;
-`;
+    background-color: white; 
+    color: black; 
+    height: 85%; 
+    box-shadow: 0 0 20px rgba(0,0,0,0.3); 
+    border-radius: 16px; 
+    justify-content: center;
+    margin-left: 2vw;
+  `; 
 
-const Cartao = styled.div`
-  background: white;
-  padding: 2rem;
-  border-radius: 16px;
-  max-width: 700px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
-  text-align: center;
-  height: 100%;
-
-  img {
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-
-  h2 {
-    color: black;
-    margin-bottom: 1rem;
-  }
-
-  p {
-    margin: 0.5rem 0;
-    color: black;
-  }
-`;
-
-const Mensagem = styled.p`
-  color: white;
-  text-align: center;
-  margin-top: 4rem;
-  font-size: 1.2rem;
-`;
-
+const Mensagem = styled.p` 
+  color: white; 
+  text-align: center; 
+  margin-top: 4rem; 
+  font-size: 1.2rem; 
+`; 
 
 const DetalhePersonagem = () => {
   const { id } = useParams();
@@ -148,31 +198,30 @@ const DetalhePersonagem = () => {
             <h2>{personagem.nome}</h2>
           </div>
         </div>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', flexWrap: 'wrap', marginTop: '1rem' }}>
             <div className="emblemas">
               <h2>Emblemas:</h2>
-              {emblemas.map((e) => (
-                <div key={e.id} title={e.nome}>
-                  <img
-                    src={e.icone_url}
-                    alt={e.nome}
-                    style={{
-                      width: '40px',
-                      height: '40px',
-                      objectFit: 'cover',
-                      borderRadius: '50%',
-                      border: '2px solid gold',
-                      boxShadow: '0 0 6px rgba(255, 204, 112, 0.6)',
-                      transition: 'transform 0.2s',
-                    }}
-                    onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
-                    onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                    />
-                </div>
-              ))}
-              
+              <div className="icones">
+
+                {emblemas.map((e) => (
+                  <div key={e.id} title={e.nome}>
+                    <img
+                      src={e.icone_url}
+                      alt={e.nome}
+                      style={{
+                        width: '40px',
+                        height: '40px',
+                        objectFit: 'cover',
+                        borderRadius: '50%',
+                        transition: 'transform 0.2s',
+                      }}
+                      onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+                      onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                      />
+                  </div>
+                ))}
+                
+              </div>
             </div>
-          </div>
         </Perfil>
       
       <Informacoes>
@@ -188,10 +237,11 @@ const DetalhePersonagem = () => {
             <button>Eventos Marcantes</button>
             <button>Lições</button>
           </div>
-          <p><strong>História:</strong> {personagem.historia}</p>
-
-          <p><strong>Lições:</strong> {personagem.licoes}</p>
-          <p><strong>Livro principal:</strong> {personagem.livro_principal}</p>
+          <div className="conteudo">
+            <p><strong>História:</strong> {personagem.historia}</p>
+            <p><strong>Lições:</strong> {personagem.licoes}</p>
+            <p><strong>Livro principal:</strong> {personagem.livro_principal}</p>
+          </div>
         </Cartao>
         
       </Informacoes>

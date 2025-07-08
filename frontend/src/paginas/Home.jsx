@@ -16,6 +16,7 @@ const AppWrapper = styled.div`
   background-attachment: fixed;
   position: relative;
   overflow: hidden;
+  justify-items: center;
 
   &::before {
     content: '';
@@ -90,7 +91,7 @@ const Home = () => {
             />
             <div>
               <button onClick={() => navigate('/quizzes')}>
-                📘 Ver todos os quizzes
+                Ver todos os quizzes
               </button>
 
             </div>

@@ -1,13 +1,32 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import fundo from "../assets/fundo.png"
 
 const Wrapper = styled.div`
+  background-image: url(${fundo});
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  overflow: hidden;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0,0,0,0.7);
+
+    &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 0;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 
   form {
     background: white;
@@ -23,16 +42,17 @@ const Wrapper = styled.div`
   h2 {
     margin-bottom: 1rem;
     text-align: center;
+    color: black;
   }
 
   input {
-    padding: 0.6rem;
+    padding: 0.8rem;
     border: 1px solid #ccc;
     border-radius: 8px;
   }
 
   button {
-    background-color: #ffcc70;
+    background-color:rgb(33, 96, 185);
     border: none;
     padding: 0.6rem;
     border-radius: 8px;
@@ -41,7 +61,18 @@ const Wrapper = styled.div`
   }
 
   button:hover {
-    background-color: #f9b64d;
+    background-color:rgb(19, 66, 133);
+  }
+
+  .registrar{
+    color: black;
+    display: flex;
+    justify-content: center;
+
+    button{
+      background-color: transparent;
+      color: rgb(19, 66, 133);
+    }
   }
 `;
 
@@ -63,7 +94,7 @@ const Login = () => {
       const data = await resposta.json();
 
       if (resposta.ok) {
-        localStorage.setItem('token', data.access_token); // ✅ nome correto do campo
+        localStorage.setItem('token', data.access_token);
         console.log("Token salvo:", data.access_token);
         alert('Login realizado com sucesso!');
         navigate('/me/personagem');
@@ -95,6 +126,11 @@ const Login = () => {
           required
         />
         <button type="submit">Entrar</button>
+
+        <div className="registrar">
+          <p>Ainda não tem conta? </p>
+          <button onClick={() => {navigate("/registro")}}>Registre-se</button>
+        </div>
       </form>
     </Wrapper>
   );

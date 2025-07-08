@@ -44,7 +44,7 @@ const Wrapper = styled.div`
   }
 
   button {
-    background-color: #ffcc70;
+    background-color:rgb(33, 96, 185);
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 8px;
@@ -54,7 +54,7 @@ const Wrapper = styled.div`
   }
 
   button:hover {
-    background-color: #f9b64d;
+    background-color:rgb(19, 66, 133);
   }
 `;
 

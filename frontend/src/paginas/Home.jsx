@@ -7,6 +7,8 @@ import ConviteFinal from '../componentes/ConviteFinal';
 import VoltarAoTopo from '../componentes/VoltarAoTopo';
 import { usePersonagens } from '../hooks/usePersonagens';
 import fundo from '../assets/fundo.png';
+import ButtonSair from '../componentes/BotaoSair';
+import { Dialog, DialogTitle, DialogContent } from '@mui/material';
 
 const AppWrapper = styled.div`
   min-height: 100vh;
@@ -17,6 +19,7 @@ const AppWrapper = styled.div`
   position: relative;
   overflow: hidden;
   justify-items: center;
+  align-items: center;
 
   &::before {
     content: '';
@@ -30,16 +33,44 @@ const AppWrapper = styled.div`
     position: relative;
     z-index: 1;
   }
+
+  .meu-personagem{
+    display: flex;
+    gap: 5vw;
+  }
+
+  .quizzes{
+    display-grid;
+    width: 15vw;
+  }
+
+  .edicao{
+    display: grid;
+    width: 15svw;
+  }
 `;
 
 const Home = () => {
   const { personagens, loading } = usePersonagens();
   const [usuarioPersonagem, setUsuarioPersonagem] = useState(null);
-  const token = localStorage.getItem('token');
   const [quizzes, setQuizzes] = useState([]);
   const [emblemasUsuario, setEmblemasUsuario] = useState([]);
-  const [mostrarQuizzes, setMostrarQuizzes] = useState(false);
   const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+
+  // Mensagem e Modal de saída
+  const [mensagemSaida, setMensagemSaida] = useState('');
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleLogout = () => {
+    setMensagemSaida('Nos vemos na próxima!✨');
+    setOpenModal(true);
+    setTimeout(() => {
+      localStorage.removeItem('token');
+      setOpenModal(false); // opcional: fechar modal
+      navigate(0); // recarrega a página e reexecuta os useEffect
+    }, 2000);
+  };
 
   useEffect(() => {
     if (usuarioPersonagem) {
@@ -66,44 +97,76 @@ const Home = () => {
     }
   }, [token]);
 
-  if (loading) return <p style={{ color: 'white', textAlign: 'center' }}>Carregando personagens...</p>;
-
-  let personagensFiltrados;
-  if (usuarioPersonagem) {
-    personagensFiltrados = personagens.filter(p => p.id !== usuarioPersonagem.id);
-  } else {
-    personagensFiltrados = personagens.filter(p => !p.usuario_id);
+  if (loading) {
+    return <p style={{ color: 'white', textAlign: 'center' }}>Carregando personagens...</p>;
   }
+
+  const personagensFiltrados = usuarioPersonagem
+    ? personagens.filter(p => p.id !== usuarioPersonagem.id)
+    : personagens.filter(p => !p.usuario_id);
 
   return (
     <AppWrapper>
-      {!usuarioPersonagem && <ConviteCard />}
 
+      <Dialog open={openModal} style={{borderRadius:'5rem', display: 'grid', alignItems: 'center', justifyItems:'center', justifyContent:'center'}}>
+        <DialogTitle><strong>Até breve!</strong> </DialogTitle>
+        <DialogContent>
+          {mensagemSaida}
+        </DialogContent>
+      </Dialog>
+
+      {!usuarioPersonagem && <ConviteCard />}
+    
       {usuarioPersonagem && (
         <section style={{ marginBottom: '2rem', textAlign: 'center' }}>
+
           <h2 style={{ color: 'white' }}>Sua cartinha:</h2>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
+          <ButtonSair onLogout={handleLogout} />
+          
+
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '2rem',
+            flexWrap: 'wrap',
+          }}>
+            
             <Card
               id={usuarioPersonagem.id}
               nome={usuarioPersonagem.nome}
               imagem={usuarioPersonagem.imagem}
               destaque
             />
-            <div>
-              <button onClick={() => navigate('/quizzes')}>
-                Ver todos os quizzes
-              </button>
-              <button onClick={() => navigate('/me/personagem')}>
-                Editar Minha Cartinha
-              </button>
+            
+            <div className='meu-personagem'>
+              <div className="quizzes">
+                <p><strong>Conquiste seus emblemas realizando quizzes e teste seus conhecimentos:</strong></p>
+                <button onClick={() => navigate('/quizzes')}>
+                  Ver todos os quizzes
+                </button>
+              </div>
 
+
+
+              <div className="edicao">
+                <p><strong>Edite seu personagem a qualquer momento:</strong></p>
+                <button onClick={() => navigate('/me/personagem')}>
+                  Editar Minha Cartinha
+                </button>
+              </div>
             </div>
           </div>
         </section>
       )}
 
       <h2 style={{ textAlign: 'center', color: 'white' }}>Conheça seus heróis:</h2>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center' }}>
+      <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '1rem',
+        justifyContent: 'center',
+      }}>
         {personagensFiltrados.map(p => (
           <Card key={p.id} id={p.id} nome={p.nome} imagem={p.imagem} />
         ))}

@@ -31,6 +31,8 @@ const Wrapper = styled.div`
   `; 
 
 const Cartinha = styled.div`
+  display: grid;
+  justify-items: center;
   background: white;
   padding: 2rem;
   border-radius: 16px;
@@ -61,11 +63,18 @@ const Cartinha = styled.div`
     font-weight: bold;
     cursor: pointer;
     margin-top: 1rem;
-  }
-
+    }
+    
   button:hover {
-    background-color:rgb(19, 66, 133);
+      background-color:rgb(19, 66, 133);
   }
+  
+  p{
+    font-size: 2vh;
+    color: black;
+    padding: 1vh;
+  }
+      
 `;
 
 const Galeria = styled.div`
@@ -89,6 +98,7 @@ const Galeria = styled.div`
     border-color:rgb(11, 26, 86);
     box-shadow: 0 0 10px rgb(112, 145, 255);
   }
+  
 `;
 
 const Mensagem = styled.p`
@@ -201,6 +211,7 @@ useEffect(() => {
       <Cartinha>
         {editando ? (
           <>
+            <p><strong>Preencha com suas informações:</strong></p>
             <input name="nome" value={form.nome || ''} onChange={handleChange} placeholder="Nome" />
             <textarea name="historia" value={form.historia || ''} onChange={handleChange} placeholder="História" />
             <input name="periodo" value={form.periodo || ''} onChange={handleChange} placeholder="Período (Seu ano de Nascimento - Presente)" />
@@ -209,7 +220,7 @@ useEffect(() => {
             <input name="livro_principal" value={form.livro_principal || ''} onChange={handleChange} placeholder="Seu versiculo favorito" />
 
             <div>
-              <p><strong>Escolha uma imagem:</strong></p>
+              <p><strong>Escolha uma imagem para sua cartinha:</strong></p>
               <Galeria>
                 {imagensDisponiveis.map((img) => (
                   <img

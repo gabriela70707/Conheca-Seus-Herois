@@ -1,11 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session, select
 from app.database import get_session
 from app.models.quiz import Quiz
 from app.models.pergunta import Pergunta
 from app.models.alternativa import Alternativa
 from app.models.personagem_emblema import PersonagemEmblema
-from app.schemas.quiz import QuizCreate, QuizRead, QuizPublico
+from app.schemas.quiz import QuizCreate, QuizRead, QuizPublico, QuizUpdate
 from app.schemas.resposta_quiz import RespostaQuiz
 from typing import List
 from app.security import get_current_user
@@ -120,6 +120,68 @@ def obter_quiz_para_responder(quiz_id: int, session: Session = Depends(get_sessi
         raise HTTPException(status_code=404, detail="Quiz não encontrado")
     return quiz
 
+
+@router.put("/quizzes/{quiz_id}", response_model=QuizRead)
+def atualizar_quiz(quiz_id: int, dados: QuizUpdate, session: Session = Depends(get_session)):
+    quiz = session.get(Quiz, quiz_id)
+    if not quiz:
+        raise HTTPException(status_code=404, detail="Quiz não encontrado")
+
+    if dados.titulo is not None:
+        quiz.titulo = dados.titulo
+    if dados.descricao is not None:
+        quiz.descricao = dados.descricao
+    if dados.emblema_id is not None:
+        quiz.emblema_id = dados.emblema_id
+
+    session.add(quiz)
+    session.commit()
+    session.refresh(quiz)
+
+    #Atualizar perguntas e alternativas
+    if dados.perguntas:
+        # Remove perguntas antigas
+        perguntas_antigas = session.exec(select(Pergunta).where(Pergunta.quiz_id == quiz.id)).all()
+        for pergunta in perguntas_antigas:
+            session.delete(pergunta)
+        session.commit()
+
+        # Adiciona novas perguntas e alternativas
+        for pergunta_data in dados.perguntas:
+            nova_pergunta = Pergunta(texto=pergunta_data.texto, quiz_id=quiz.id)
+            session.add(nova_pergunta)
+            session.commit()
+            session.refresh(nova_pergunta)
+
+            for alternativa_data in pergunta_data.alternativas:
+                nova_alternativa = Alternativa(
+                    texto=alternativa_data.texto,
+                    correta=alternativa_data.correta,
+                    pergunta_id=nova_pergunta.id
+                )
+                session.add(nova_alternativa)
+
+        session.commit()
+    return quiz
+
+
+@router.delete("/quizzes/{quiz_id}", status_code=status.HTTP_204_NO_CONTENT)
+def deletar_quiz(quiz_id: int, session: Session = Depends(get_session)):
+    quiz = session.get(Quiz, quiz_id)
+    if not quiz:
+        raise HTTPException(status_code=404, detail="Quiz não encontrado")
+
+    # Deleta perguntas e alternativas relacionadas
+    perguntas = session.exec(select(Pergunta).where(Pergunta.quiz_id == quiz_id)).all()
+    for pergunta in perguntas:
+        alternativas = session.exec(select(Alternativa).where(Alternativa.pergunta_id == pergunta.id)).all()
+        for alternativa in alternativas:
+            session.delete(alternativa)
+        session.delete(pergunta)
+
+    # Deleta o quiz
+    session.delete(quiz)
+    session.commit()
 
 """
 Exemplo de requisição para a criação do quiz:

@@ -7,4 +7,4 @@ class Emblema(SQLModel, table=True):
     descricao: Optional[str] = None
     icone_url: Optional[str] = None
 
-    personagens: list ["PersonagemEmblema"] = Relationship(back_populates="emblema")
+    personagens: list ["PersonagemEmblema"] = Relationship(back_populates="emblema", sa_relationship_kwargs={"cascade": "all, delete"})

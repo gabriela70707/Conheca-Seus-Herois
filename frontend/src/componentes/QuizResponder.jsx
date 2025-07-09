@@ -159,7 +159,7 @@ const QuizResponder = () => {
                 <div style={{ textAlign: 'center', marginTop: '1rem' }}>
                   <h3 style={{ color: '#FFD700' }}>🏆 Parabéns!</h3>
                   <img
-                    src={emblemaConquistado.imagem}
+                    src={emblemaConquistado.icone_url}
                     alt={emblemaConquistado.nome}
                     style={{
                       width: '100px',

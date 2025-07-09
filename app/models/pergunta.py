@@ -8,6 +8,6 @@ class Pergunta (SQLModel, table = True):
     quiz_id : int = Field(foreign_key="quiz.id")
 
     quiz : Optional["Quiz"] = Relationship(back_populates="perguntas") 
-    alternativas : List["Alternativa"] = Relationship(back_populates="pergunta")
+    alternativas : List["Alternativa"] = Relationship(back_populates="pergunta", sa_relationship_kwargs={"cascade": "all, delete"})
 
 from app.models.alternativa import Alternativa #importação tardia

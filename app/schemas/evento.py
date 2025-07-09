@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import Optional
 
 class EventoBase(BaseModel):
-    nome : str
+    titulo : str
     local : Optional[str] = None
     data : Optional[str] = None
     descricao : Optional[str] = None

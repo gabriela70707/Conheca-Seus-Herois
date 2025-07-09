@@ -9,6 +9,12 @@ class QuizCreate(BaseModel):
     emblema_id : Optional[int] = None
     perguntas : List[PerguntaCreate]
 
+class QuizUpdate(BaseModel):
+    titulo: Optional[str]
+    descricao: Optional[str]
+    emblema_id: Optional[int]
+    perguntas: Optional[List[PerguntaCreate]]
+
 class QuizRead(BaseModel):
     id :int
     titulo : str

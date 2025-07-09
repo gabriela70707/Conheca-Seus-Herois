@@ -9,6 +9,16 @@ from typing import List
 
 router = APIRouter(prefix="/emblemas")
 
+#listar os emblemas do usuario logado 
+@router.get("/me", response_model=List[EmblemaRead])
+def listar_emblemas_do_personagem(usuario : Usuario = Depends(get_current_user), session : Session = Depends(get_session)):
+    personagem = usuario.personagem
+    if not personagem:
+        raise HTTPException(status_code=404, detail="Usuario não tem personagem")
+    emblemas = [vinculo.emblema for vinculo in personagem.emblemas if vinculo.emblema is not None] #garante que so vai haver emblemas diferentes de noneS
+    return emblemas
+
+
 @router.get("/", response_model=List[EmblemaRead])
 def listar_emblemas(session : Session = Depends(get_session)):
     return session.query(Emblema).all()
@@ -60,12 +70,3 @@ def deletar_emblema(id:int, session: Session = Depends(get_session)):
     session.commit()
     return {"mensagem":"Emblema removido com sucesso"}
 
-
-#listar os emblemas do usuario logado 
-@router.get("/me", response_model=List[EmblemaRead])
-def listar_emblemas_do_personagem(usuario : Usuario = Depends(get_current_user), session : Session = Depends(get_session)):
-    personagem = usuario.personagem
-    if not personagem:
-        raise HTTPException(status_code=404, detail="Usuario não tem personagem")
-    emblemas = [vinculo.emblema for vinculo in personagem.emblemas if vinculo.emblema is not None] #garante que so vai haver emblemas diferentes de noneS
-    return emblemas

@@ -420,3 +420,4 @@ Arquivo	Importação tardia necessária?	Por quê?
 quiz.py	✅ Sim	Porque ele precisa saber o que é Pergunta para o relacionamento funcionar
 pergunta.py	❌ Não	Só usa "Quiz" como string, o que já é suficiente
 
+Declarar primeiro a logica estatica depois a dinamica (lembrar do que aconteceu com emblemas)

@@ -8,7 +8,7 @@ class Quiz(SQLModel, table = True):
     descricao : Optional[str] = None
     emblema_id : Optional[int] = Field(default=None, foreign_key="emblema.id") #cada quiz esta associado a um emblema especifico
 
-    perguntas : List["Pergunta"] = Relationship(back_populates="quiz")
+    perguntas : List["Pergunta"] = Relationship(back_populates="quiz", sa_relationship_kwargs={"cascade": "all, delete"})
     emblema: Optional[Emblema] = Relationship() #para que possa acessar todos os atributos de Emblema
 
 from app.models.pergunta import Pergunta #importação tardia(lazy import) para evitar importação circular

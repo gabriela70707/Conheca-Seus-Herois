@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import fundo from '../assets/fundo.png'
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+
+
 
 const Wrapper = styled.div` 
   min-height: 100vh; 
@@ -125,6 +128,11 @@ const Cartao = styled.div`
     height: 65vh;
     animation: slideFade 0.4s ease;
     padding: 1rem;
+
+    .historia{
+      display: grid;
+      justify-items: start;
+    }
   }
 
   @keyframes slideFade {
@@ -169,6 +177,37 @@ const Bio = styled.div`
     margin-left: 2vw;
   `;
 
+const ImagemContainer = styled.div`
+  position: relative;
+  display: inline-block;
+
+  img {
+    height: 11vh;
+    border-radius: 50%;
+    transition: transform 0.2s;
+  }
+
+  .nome {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    padding: 0.3rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  &:hover .nome {
+    opacity: 1;
+  }
+`;
+
+
 const Mensagem = styled.p` 
   color: white; 
   text-align: center; 
@@ -180,9 +219,27 @@ const DetalhePersonagem = () => {
   const { id } = useParams();
   const [personagem, setPersonagem] = useState(null);
   const [erro, setErro] = useState(null);
-
   const [emblemas, setEmblemas] = useState([]);
+  const [eventos, setEventos] = useState([])
+  const [relacionamentos, setRelacionamentos] = useState([])
   const [secaoAtiva, setSecaoAtiva] = useState('historia');
+  const [usuarioPersonagem, setUsuarioPersonagem] = useState(null);
+  const token = localStorage.getItem("token");
+  const [emblemaSelecionado, setEmblemaSelecionado] = useState(null);
+  const [modalAberto, setModalAberto] = useState(false);
+
+
+
+  useEffect(() => {
+    if (token) {
+      fetch(`${import.meta.env.VITE_API_URL}/me/personagem`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => setUsuarioPersonagem(data))
+        .catch(() => setUsuarioPersonagem(null));
+    }
+  }, [token]);
 
 
   useEffect(() => {
@@ -191,6 +248,20 @@ const DetalhePersonagem = () => {
       .then(data => setEmblemas(data))
       .catch(err => console.error("Erro ao carregar emblemas:", err));
   }, [id]);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/personagens-eventos/personagem/${id}/eventos`)
+      .then(res => res.json())
+      .then(data => setEventos(data))
+      .catch(err => console.error("Erro ao carregar os eventos:", err))
+  }, [id])
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/relacionamentos/personagem/${id}/relacionamentos`)
+      .then(res => res.json())
+      .then(data => setRelacionamentos(data))
+      .catch(err => console.error("Erro ao carregar os relacionamentos:", err))
+  }, [id])
 
 
   useEffect(() => {
@@ -235,6 +306,10 @@ const DetalhePersonagem = () => {
                     borderRadius: '50%',
                     transition: 'transform 0.2s',
                   }}
+                  onClick={() => {
+                    setEmblemaSelecionado(e);
+                    setModalAberto(true);
+                  }}
                   onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
                   onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
                 />
@@ -245,12 +320,49 @@ const DetalhePersonagem = () => {
         </div>
       </Perfil>
 
+      <Dialog open={modalAberto} onClose={() => setModalAberto(false)}>
+        <DialogTitle   style={{ textAlign: 'center'}}>{emblemaSelecionado?.nome}</DialogTitle>
+        <DialogContent>
+          <div style={{ display:'grid', textAlign: 'center'}}>
+            <img
+              src={emblemaSelecionado?.icone_url}
+              alt={emblemaSelecionado?.nome}
+              style={{
+                width: '90px',
+                height: '90px',
+                borderRadius: '50%',
+                marginBottom: '1rem'
+              }}
+            />
+            <p>{emblemaSelecionado?.descricao}</p>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setModalAberto(false)}>Fechar</Button>
+        </DialogActions>
+      </Dialog>
+
+
       <Informacoes>
 
         <Bio>
-          <p><strong>Genealogia:</strong> {personagem.genealogia}</p>
+          <p>
+            <strong>{usuarioPersonagem?.id === Number(id) ? "Pessoas que me inspiram na minha vida com Deus" : "Genealogia:"}</strong>
+            {personagem.genealogia}
+          </p>
           <p><strong>Período:</strong> {personagem.periodo}</p>
-          <p><strong>Seguido Por:</strong></p>
+
+          {relacionamentos.map((e) => (
+            <div key={e.id}>
+              <p>
+                <strong>{usuarioPersonagem?.id !== Number(id) ? "Seguido Por:" : ''}</strong>
+              </p>
+              <ImagemContainer>
+                <img src={e.personagem.imagem} alt={e.nome} onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')} onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')} />
+                <span className="nome">{e.personagem.nome}</span>
+              </ImagemContainer>
+            </div>
+          ))}
         </Bio>
 
         <Cartao>
@@ -261,12 +373,15 @@ const DetalhePersonagem = () => {
             >
               Minha História
             </button>
-            <button
-              className={secaoAtiva === 'eventos' ? 'ativo' : ''}
-              onClick={() => setSecaoAtiva('eventos')}
-            >
-              Eventos Marcantes
-            </button>
+            {usuarioPersonagem?.id !== Number(id) && (
+              <button
+                className={secaoAtiva === 'eventos' ? 'ativo' : ''}
+                onClick={() => setSecaoAtiva('eventos')}
+              >
+                Eventos Marcantes
+              </button>
+            )}
+
             <button
               className={secaoAtiva === 'licoes' ? 'ativo' : ''}
               onClick={() => setSecaoAtiva('licoes')}
@@ -277,17 +392,40 @@ const DetalhePersonagem = () => {
 
           <div className="conteudo">
             {secaoAtiva === 'historia' && (
-              <>
+              <section className='historia'>
                 <p><strong>História:</strong> {personagem.historia}</p>
-                <p><strong>Livro principal:</strong> {personagem.livro_principal}</p>
-              </>
+
+                <p>
+                  <strong>
+                    {usuarioPersonagem?.id === Number(id) ? "Versículo Favorito" : "Saiba mais da minha história em"}:
+                  </strong>
+                  {personagem.livro_principal}
+                </p>
+
+              </section>
             )}
             {secaoAtiva === 'licoes' && (
               <p><strong>Lições:</strong> {personagem.licoes}</p>
             )}
             {secaoAtiva === 'eventos' && (
-              <p><em>Eventos marcantes em construção…</em></p>
+              <div className="eventos">
+                {eventos.length > 0 ? (
+                  eventos.map((evento) => (
+                    <div key={evento.id} style={{ marginBottom: '1rem' }}>
+                      <h3>{evento.titulo}</h3>
+                      <p><strong>Local:</strong> {evento.local}</p>
+                      <p><strong>Descrição:</strong> {evento.descricao}</p>
+                      {evento.data && (
+                        <p><strong>Data aproximada:</strong> {evento.data}</p>
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <p style={{ color: '#555' }}><em>Nenhum evento registrado para este personagem.</em></p>
+                )}
+              </div>
             )}
+
           </div>
         </Cartao>
 

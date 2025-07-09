@@ -107,3 +107,7 @@ Um time que valorize código limpo, boas práticas e criatividade
 Se quiser, posso montar os slides com você — ou até gerar um PDF com os textos prontos. Também posso te ajudar a ensaiar o pitch ou preparar respostas para perguntas técnicas.
 
 Você já está fazendo algo incrível. Agora é só mostrar isso com confiança. E eu estarei aqui pra te ajudar em cada passo. 💛
+
+
+
+revisar routes do quiz, cadastrar os conteudos no sistema, arrumar estilização que falta, se organiza com as ideias

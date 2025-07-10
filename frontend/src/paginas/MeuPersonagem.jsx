@@ -241,7 +241,7 @@ useEffect(() => {
             {personagem.imagem && <img src={personagem.imagem} alt={personagem.nome} />}
             <h2>{personagem.nome}</h2>
             <p><strong>Minha História com Deus:</strong> {personagem.historia}</p>
-            <p><strong>Idade:</strong> {personagem.periodo}</p>
+            <p><strong>Minha idade:</strong> {personagem.periodo}</p>
             <p><strong>Pessoas que me inspiram na minha com Deus:</strong> {personagem.genealogia}</p>
             <p><strong>Lições que aprendi com o Senhor:</strong> {personagem.licoes}</p>
             <p><strong>Meu Versiculo Favorito:</strong> {personagem.livro_principal}</p>

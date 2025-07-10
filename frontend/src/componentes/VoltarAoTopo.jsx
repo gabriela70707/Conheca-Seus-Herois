@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Botao = styled.button`
   position: fixed;
   bottom: 2rem;
-  right: 2rem;
+  right: 1rem;
   background-color:rgb(33, 96, 185);
   color: white;
   border: none;

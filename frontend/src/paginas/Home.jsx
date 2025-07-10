@@ -86,6 +86,7 @@ const Home = () => {
   // Mensagem e Modal de saída
   const [mensagemSaida, setMensagemSaida] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  
 
   const handleLogout = () => {
     setMensagemSaida("Nos vemos na próxima!✨");
@@ -104,6 +105,7 @@ const Home = () => {
     setPersonagemSorteado(aleatorio);
   };
 
+  
   useEffect(() => {
     if (usuarioPersonagem) {
       fetch(`${import.meta.env.VITE_API_URL}/quizzes/publicos`)

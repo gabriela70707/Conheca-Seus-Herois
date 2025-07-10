@@ -214,7 +214,7 @@ useEffect(() => {
             <p><strong>Preencha com suas informações:</strong></p>
             <input name="nome" value={form.nome || ''} onChange={handleChange} placeholder="Nome" />
             <textarea name="historia" value={form.historia || ''} onChange={handleChange} placeholder="História" />
-            <input name="periodo" value={form.periodo || ''} onChange={handleChange} placeholder="Período (Seu ano de Nascimento - Presente)" />
+            <input name="periodo" value={form.periodo || ''} onChange={handleChange} placeholder="Digite sua idade" />
             <input name="genealogia" value={form.genealogia || ''} onChange={handleChange} placeholder="Pessoas que te inspiram em sua vida com Deus" />
             <input name="licoes" value={form.licoes || ''} onChange={handleChange} placeholder="Lições que aprendeu com o Senhor" />
             <input name="livro_principal" value={form.livro_principal || ''} onChange={handleChange} placeholder="Seu versiculo favorito" />
@@ -241,7 +241,7 @@ useEffect(() => {
             {personagem.imagem && <img src={personagem.imagem} alt={personagem.nome} />}
             <h2>{personagem.nome}</h2>
             <p><strong>Minha História com Deus:</strong> {personagem.historia}</p>
-            <p><strong>Período:</strong> {personagem.periodo}</p>
+            <p><strong>Idade:</strong> {personagem.periodo}</p>
             <p><strong>Pessoas que me inspiram na minha com Deus:</strong> {personagem.genealogia}</p>
             <p><strong>Lições que aprendi com o Senhor:</strong> {personagem.licoes}</p>
             <p><strong>Meu Versiculo Favorito:</strong> {personagem.livro_principal}</p>

@@ -29,7 +29,7 @@ def relacionamento_por_personagem(personagem_id : int, session : Session = Depen
 
 @router.delete("/", status_code=status.HTTP_200_OK)
 def desvincular_personagem_relacionamento(dados : RelacionamentoPersonagemLink, session : Session = Depends(get_session)):
-    associacao = session.get(RelacionamentoPersonagemLink, (dados.personagem_id, dados.relacionado_id))
+    associacao = session.get(PersonagemRelacionamento, (dados.personagem_id, dados.relacionado_id))
     if not associacao:
         raise HTTPException(status_code=404, detail="Vinculo não encontrado!")
     session.delete(associacao)

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import fundo from '../assets/fundo.png'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import LivroBibliaLink from '../componentes/LivroBibliaLink';
 
 
 const Wrapper = styled.div` 
@@ -134,10 +135,19 @@ const Cartao = styled.div`
       height: 65vh;
       animation: slideFade 0.4s ease;
       padding: 1rem;
+      display: grid;
+      justify-items: start;
       
       .historia{
         display: grid;
-      justify-items: start;
+        justify-items: start;
+        text-align: justify;
+        padding: 1.7vh;
+        font-size: 2.2vh;
+      }
+      
+      .link-biblia{
+        padding: 1vw;
       }
     }
       
@@ -328,7 +338,7 @@ const DetalhePersonagem = () => {
       </Perfil>
 
       <Dialog open={modalAberto} onClose={() => setModalAberto(false)}>
-        <DialogTitle style={{ textAlign: 'center'}}>Emblema: {emblemaSelecionado?.nome}</DialogTitle>
+        <DialogTitle style={{ textAlign: 'center' }}>Emblema: {emblemaSelecionado?.nome}</DialogTitle>
         <DialogContent>
           <div style={{ display: 'grid', textAlign: 'center', justifyItems: 'center' }}>
             <img
@@ -344,7 +354,7 @@ const DetalhePersonagem = () => {
             <p>{emblemaSelecionado?.descricao}</p>
           </div>
         </DialogContent>
-        <DialogActions style={{display: 'flex', justifyContent: 'center'}}>
+        <DialogActions style={{ display: 'flex', justifyContent: 'center' }}>
           <Button onClick={() => setModalAberto(false)}>Fechar</Button>
         </DialogActions>
       </Dialog>
@@ -413,17 +423,20 @@ const DetalhePersonagem = () => {
 
           <div className="conteudo">
             {secaoAtiva === 'historia' && (
-              <section className='historia'>
-                <p><strong>História:</strong> {personagem.historia}</p>
+              <>
+                <section className='historia'>
+                  <p>{personagem.historia}</p>
 
-                <p>
+
+
+                </section>
+                <p className='link-biblia'>
                   <strong>
-                    {usuarioPersonagem?.id === Number(id) ? "Versículo Favorito" : "Saiba mais da minha história em"}:
+                    {usuarioPersonagem?.id === Number(id) ? "Versículo Favorito: " : "Saiba mais da minha história em: "}
                   </strong>
-                  {personagem.livro_principal}
+                  <LivroBibliaLink livro={personagem.livro_principal} />
                 </p>
-
-              </section>
+              </>
             )}
             {secaoAtiva === 'licoes' && (
               <p><strong>Lições:</strong> {personagem.licoes}</p>

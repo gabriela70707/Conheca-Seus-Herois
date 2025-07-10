@@ -5,8 +5,8 @@ const Botao = styled.button`
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  background-color: #ffcc70;
-  color: black;
+  background-color:rgb(33, 96, 185);
+  color: white;
   border: none;
   padding: 0.6rem 1rem;
   border-radius: 50px;
@@ -17,7 +17,7 @@ const Botao = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #f9b64d;
+    background-color:rgb(19, 66, 133);
   }
 `;
 

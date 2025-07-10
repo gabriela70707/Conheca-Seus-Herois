@@ -37,12 +37,40 @@ const AppWrapper = styled.div`
   .meu-personagem {
     display: flex;
     gap: 5vw;
-    flex-wrap: wrap;
+    font-size: 2.2vh;
+    justify-content: space-around;
+    margin-bottom: 4vh;
+    width: 100vw;
+    align-items: start;
+    padding: 2vh;
+      
+      button{
+        text-align: center;
+        background-color:rgb(33, 96, 185);
+      }
+    
+      button:hover{
+        background-color:rgb(19, 66, 133);
+      }
+      
   }
 
   .quizzes, .edicao, .personagem-aleatorio {
     display: grid;
     width: 15vw;
+  }
+  
+  .personagem-aleatorio{
+    button{
+      width: 17vw;
+      height: 6vh;
+      background-color:rgb(33, 96, 185);
+    }
+    
+    button:hover{
+      background-color:rgb(19, 66, 133);
+    }
+    
   }
 `;
 
@@ -136,7 +164,7 @@ const Home = () => {
           }}>
             <div className="meu-personagem">
               <div className="quizzes">
-                <p><strong>Conquiste seus emblemas realizando quizzes:</strong></p>
+                <p><strong>Conquiste seus emblemas:</strong></p>
                 <button onClick={() => navigate("/quizzes")}>
                   Ver todos os quizzes
                 </button>

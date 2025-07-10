@@ -28,14 +28,31 @@ const AppWrapper = styled.div`
     z-index: 1;
   }
 
+  .info{
+    padding: 1.5vw;
+    background: rgba(0, 0, 0, 0.74);
+    border-radius: 3.2vh;
+  }
+    
   .emblemas-existentes {
     display: grid;
     justify-items: start;
     padding: 1.2vw;
+    color: white;
 
     .botoes {
       display: flex;
       gap: 1vw;
+
+        button{
+          text-align: center;
+          background-color:rgb(33, 96, 185);
+          color: white;
+          height: 6vh;
+        }
+        button:hover{
+          background-color:rgb(19, 66, 133);
+        }
     }
   }
 `;
@@ -98,9 +115,10 @@ const ListaQuizzes = () => {
           <h2>Quizzes disponíveis</h2>
           <p>Você deve ter percebido que os heróis têm seus emblemas, certo? Você também pode conquistar os seus!</p>
           <p>Realize os quizzes, teste seus conhecimentos e ganhe seus emblemas!</p>
+          <p>(Os emblemas em preto e branco são os que ainda você não conquistou)</p>
         </div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginTop : '2.5vh' }}>
           {quizzes.map((quiz) => {
             const conquistado = idsUsuario.has(Number(quiz.emblema?.id));
             return (
@@ -122,8 +140,8 @@ const ListaQuizzes = () => {
                   src={quiz.emblema?.icone_url}
                   alt={quiz.emblema?.nome}
                   style={{
-                    width: '60px',
-                    height: '60px',
+                    width: '70px',
+                    height: '70px',
                     objectFit: 'cover',
                     borderRadius: '50%',
                     filter: conquistado ? 'none' : 'grayscale(100%)',
@@ -131,7 +149,7 @@ const ListaQuizzes = () => {
                   }}
                 />
                 <p style={{ fontWeight: 'bold' }}>{quiz.titulo}</p>
-                <p style={{ fontSize: '0.8rem', color: '#555' }}>{quiz.emblema?.nome}</p>
+                <p style={{ fontSize: '0.8rem', color: '#555' }}>Emblema: {quiz.emblema?.nome}</p>
                 {conquistado && <p style={{ color: 'green', fontSize: '0.8rem' }}>✅ Emblema conquistado</p>}
               </div>
             );
@@ -193,8 +211,8 @@ const ListaQuizzes = () => {
                     src={emblema.icone_url}
                     alt={emblema.nome}
                     style={{
-                      width: '60px',
-                      height: '60px',
+                      width: '120px',
+                      height: '120px',
                       objectFit: 'cover',
                       borderRadius: '50%',
                       filter: conquistado ? 'blur(2px)' : 'none',
@@ -218,8 +236,8 @@ const ListaQuizzes = () => {
               src={emblemaSelecionado?.icone_url}
               alt={emblemaSelecionado?.nome}
               style={{
-                width: '100px',
-                height: '100px',
+                width: '200px',
+                height: '200px',
                 borderRadius: '50%',
                 marginBottom: '1rem',
               }}

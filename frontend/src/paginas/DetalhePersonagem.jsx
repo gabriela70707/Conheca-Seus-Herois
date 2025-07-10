@@ -3,12 +3,12 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import fundo from '../assets/fundo.png'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
-
+import { useNavigate } from 'react-router-dom';
 
 
 const Wrapper = styled.div` 
-  min-height: 100vh; 
-  max-width: 100vw; 
+min-height: 100vh; 
+max-width: 100vw; 
   background-image: url(${fundo}); 
   background-size: cover; 
   background-position: center; 
@@ -18,25 +18,25 @@ const Wrapper = styled.div`
   display: grid; 
   justify-content: center; 
   padding: 1rem; 
-
-    &::before { 
+  
+  &::before { 
     content: ''; 
     position: absolute; 
     inset: 0; 
     background: rgba(0, 0, 0, 0.6); 
     z-index: 0; 
-  } 
-
-  > * { 
-    position: relative; 
-    z-index: 1; 
-  } 
+    } 
+    
+    > * { 
+      position: relative; 
+      z-index: 1; 
+      } 
   `;
 
 
 const Perfil = styled.div` 
   display: flex; 
-  background-color: white; 
+  background-color:rgb(233, 234, 236);
   border-radius: 15px; 
   padding: 3vh; 
   color: black; 
@@ -44,18 +44,18 @@ const Perfil = styled.div`
   height: 20vh; 
   align-items: center; 
   justify-content: space-between; 
-
+  
   .personagem{ 
     display: flex;   
     align-items: center; 
-  } 
-
-  img { 
-    padding: 0 2vw; 
-    height: 20vh; 
-    border-radius: 50%; 
-  } 
-
+    } 
+    
+    img { 
+      padding: 0 2vw; 
+      height: 20vh; 
+      border-radius: 50%; 
+      } 
+      
   .nome{ 
     display: grid; 
     font-size: 2vh; 
@@ -65,31 +65,36 @@ const Perfil = styled.div`
     h2, p{ 
       margin: 0; 
       box-sizing: border-box; 
-    } 
-  }
+      } 
+      }
+      
+      .emblemas{
+        display: grid;
+        justify-items: center; 
+        width: 30vw;
+        margin-right: 7vw;
+        height: 80%;
+        
 
-  .emblemas{
-    display: grid;
-    justify-items: center; 
-    width: 30vw;
-    margin-right: 7vw;
-    height: 80%;
-
-
+        h2{
+          font-size: 2.2vh;
+        }
+    }
+    
+    
     .icones{
       display: flex; 
-      justify-content: center; 
-      gap: 0.5rem;  
+      justify-content: center;   
       flex-wrap: wrap;  
-      margin-top: 0rem;  
-    }
+      padding: 1vh;
 
-    h2{
-      font-size: 2.2vh;
-    }
-  } 
 
-`;
+      img{
+        padding: 0;
+      }
+    }
+        
+        `;
 
 const Informacoes = styled.div` 
   display: grid; 
@@ -111,84 +116,85 @@ const Cartao = styled.div`
   img { 
     width: 100%; 
     margin-bottom: 1rem; 
-  } 
-
+    } 
+    
   h2 { 
     color: black; 
   } 
-
+  
   p { 
     margin: 0.5rem 0; 
     color: black; 
-  } 
-
-.conteudo {
-    border-radius: 16px;
-    background-color: white;
-    height: 65vh;
-    animation: slideFade 0.4s ease;
-    padding: 1rem;
-
-    .historia{
-      display: grid;
-      justify-items: start;
-    }
-  }
-
-  @keyframes slideFade {
-    from {
-      opacity: 0;
-      transform: translateX(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
- .botoes {
-    display: flex;
-    gap: 3vw;
-    height: 7vh;
-    margin-bottom: 2rem;
-
-    button {
-      background-color: rgba(24, 96, 178, 0.3);
+    } 
+    
+    .conteudo {
+      border-radius: 16px;
       color: black;
-      width: 12vw;
-      transition: background-color 0.3s ease;
-
-      &.ativo {
-        background-color: rgba(24, 96, 178, 0.88);
-        color: white;
+      background-color:rgb(233, 234, 236);
+      height: 65vh;
+      animation: slideFade 0.4s ease;
+      padding: 1rem;
+      
+      .historia{
+        display: grid;
+      justify-items: start;
       }
     }
+      
+      @keyframes slideFade {
+        from {
+          opacity: 0;
+          transform: translateX(20px);
+        }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+      }
+      
+      .botoes {
+        display: flex;
+        gap: 3vw;
+        height: 7vh;
+        margin-bottom: 2rem;
+        
+        button {
+          background-color: rgba(24, 96, 178, 0.3);
+          color: black;
+          width: 12vw;
+          transition: background-color 0.3s ease;
+
+          &.ativo {
+            background-color: rgba(24, 96, 178, 0.88);
+            color: white;
+            }
+        }
   }
 `;
 
 const Bio = styled.div` 
-    display: grid;
-    background-color: white; 
-    color: black; 
-    height: 85%; 
-    box-shadow: 0 0 20px rgba(0,0,0,0.3); 
-    border-radius: 16px; 
-    justify-content: center;
-    margin-left: 2vw;
-  `;
+  display: grid;
+  background-color:rgb(233, 234, 236);
+  color: black; 
+  height: 85%; 
+  box-shadow: 0 0 20px rgba(0,0,0,0.3); 
+  border-radius: 16px; 
+  justify-content: center;
+  margin-left: 2vw;
+`;
 
 const ImagemContainer = styled.div`
   position: relative;
   display: inline-block;
-
+  
   img {
     height: 11vh;
     border-radius: 50%;
     transition: transform 0.2s;
-  }
-
-  .nome {
-    position: absolute;
+    }
+    
+    .nome {
+      position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
@@ -200,12 +206,12 @@ const ImagemContainer = styled.div`
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
+    }
+    
+    &:hover .nome {
+      opacity: 1;
   }
-
-  &:hover .nome {
-    opacity: 1;
-  }
-`;
+  `;
 
 
 const Mensagem = styled.p` 
@@ -213,7 +219,7 @@ const Mensagem = styled.p`
   text-align: center; 
   margin-top: 4rem; 
   font-size: 1.2rem; 
-`;
+  `;
 
 const DetalhePersonagem = () => {
   const { id } = useParams();
@@ -227,6 +233,7 @@ const DetalhePersonagem = () => {
   const token = localStorage.getItem("token");
   const [emblemaSelecionado, setEmblemaSelecionado] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
+  const navigate = useNavigate();
 
 
 
@@ -300,8 +307,8 @@ const DetalhePersonagem = () => {
                   src={e.icone_url}
                   alt={e.nome}
                   style={{
-                    width: '40px',
-                    height: '40px',
+                    width: '65px',
+                    height: '65px',
                     objectFit: 'cover',
                     borderRadius: '50%',
                     transition: 'transform 0.2s',
@@ -321,9 +328,9 @@ const DetalhePersonagem = () => {
       </Perfil>
 
       <Dialog open={modalAberto} onClose={() => setModalAberto(false)}>
-        <DialogTitle   style={{ textAlign: 'center'}}>{emblemaSelecionado?.nome}</DialogTitle>
+        <DialogTitle style={{ textAlign: 'center'}}>Emblema: {emblemaSelecionado?.nome}</DialogTitle>
         <DialogContent>
-          <div style={{ display:'grid', textAlign: 'center'}}>
+          <div style={{ display: 'grid', textAlign: 'center', justifyItems: 'center' }}>
             <img
               src={emblemaSelecionado?.icone_url}
               alt={emblemaSelecionado?.nome}
@@ -337,7 +344,7 @@ const DetalhePersonagem = () => {
             <p>{emblemaSelecionado?.descricao}</p>
           </div>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{display: 'flex', justifyContent: 'center'}}>
           <Button onClick={() => setModalAberto(false)}>Fechar</Button>
         </DialogActions>
       </Dialog>
@@ -352,17 +359,31 @@ const DetalhePersonagem = () => {
           </p>
           <p><strong>Período:</strong> {personagem.periodo}</p>
 
-          {relacionamentos.map((e) => (
-            <div key={e.id}>
-              <p>
-                <strong>{usuarioPersonagem?.id !== Number(id) ? "Seguido Por:" : ''}</strong>
-              </p>
-              <ImagemContainer>
-                <img src={e.personagem.imagem} alt={e.nome} onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')} onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')} />
-                <span className="nome">{e.personagem.nome}</span>
-              </ImagemContainer>
-            </div>
-          ))}
+          {relacionamentos.map((e) => {
+            const seguidoPorOutro = usuarioPersonagem?.id !== Number(id);
+
+            return (
+              <div key={e.id}>
+                {seguidoPorOutro && (
+                  <p>
+                    <strong>Seguido Por:</strong>
+                  </p>
+                )}
+                <ImagemContainer>
+                  <img
+                    src={e.personagem.imagem}
+                    alt={e.personagem.nome}
+                    onMouseOver={(ev) => (ev.currentTarget.style.transform = 'scale(1.1)')}
+                    onMouseOut={(ev) => (ev.currentTarget.style.transform = 'scale(1)')}
+                    onClick={() => navigate(`/personagem/${e.personagem.id}`)}
+                    style={{ cursor: 'pointer', transition: 'transform 0.2s' }}
+                  />
+                  <span className="nome">{e.personagem.nome}</span>
+                </ImagemContainer>
+              </div>
+            );
+          })}
+
         </Bio>
 
         <Cartao>

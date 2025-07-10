@@ -43,7 +43,7 @@ const StyledWrapper = styled.div`
 
   /* plus sign */
   .sign {
-    width: 100%;
+    width: 300px;
     transition-duration: .3s;
     display: flex;
     align-items: center;
@@ -51,7 +51,7 @@ const StyledWrapper = styled.div`
   }
 
   .sign svg {
-    width: 17px;
+    height: 15px;
   }
 
   .sign svg path {

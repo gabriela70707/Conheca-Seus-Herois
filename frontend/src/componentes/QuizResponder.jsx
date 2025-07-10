@@ -27,6 +27,14 @@ const AppWrapper = styled.div`
     position: relative;
     z-index: 1;
   }
+
+  button{
+    background-color:rgb(33, 96, 185);
+  }
+  
+  button:hover{
+    background-color:rgb(19, 66, 133);
+  }
 `;
 
 const QuizResponder = () => {
@@ -125,7 +133,7 @@ const QuizResponder = () => {
           marginTop: '1rem',
           padding: '0.6rem 1.2rem',
           borderRadius: '8px',
-          backgroundColor: '#2160B9',
+          textAlign: 'center',
           border: 'none',
           fontWeight: 'bold',
           cursor: 'pointer'
@@ -157,7 +165,7 @@ const QuizResponder = () => {
 
               {emblemaConquistado && (
                 <div style={{ textAlign: 'center', marginTop: '1rem' }}>
-                  <h3 style={{ color: '#FFD700' }}>🏆 Parabéns!</h3>
+                  <h3 style={{ color: '#FFD700' }}>🏆 Parabéns! Você conquistou o emblema! 🏆</h3>
                   <img
                     src={emblemaConquistado.icone_url}
                     alt={emblemaConquistado.nome}

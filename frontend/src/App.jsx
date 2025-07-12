@@ -1,5 +1,4 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from './paginas/Home';
 import Registro from './paginas/Registro';
 import Login from './paginas/Login';

@@ -4,31 +4,31 @@ import { useNavigate } from 'react-router-dom';
 
 const Card = ({ id, nome, imagem, destaque }) => {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    return (
-        <StyledWrapper imagem={imagem} destaque={destaque}>
-            <div onClick={() => navigate(`/personagem/${id}`)} style={{ cursor: 'pointer' }}>
-                <div className="container noselect">
-                    <div className="canvas">
-                        {/* Trackers para efeito 3D */}
-                        {Array.from({ length: 25 }, (_, i) => (
-                            <div key={i} className={`tracker tr-${i + 1}`} />
-                        ))}
+  return (
+    <StyledWrapper imagem={imagem} destaque={destaque}>
+      <div onClick={() => navigate(`/personagem/${id}`)} style={{ cursor: 'pointer' }}>
+        <div className="container noselect">
+          <div className="canvas">
+            {/* Trackers para efeito 3D */}
+            {Array.from({ length: 25 }, (_, i) => (
+              <div key={i} className={`tracker tr-${i + 1}`} />
+            ))}
 
-                        {/* Brilho atrás do card */}
-                        <div className="brilho" />
+            {/* Brilho atrás do card */}
+            <div className="brilho" />
 
-                        {/* Card com imagem e nome */}
-                        <div id="card">
-                            {destaque && <div className="faixa-destaque">⭐ Você</div>} 
-                            <div className="nome">{nome}</div>
-                        </div>
-                    </div>
-                </div>
+            {/* Card com imagem e nome */}
+            <div id="card">
+              {destaque && <div className="faixa-destaque">⭐ Você</div>}
+              <div className="nome">{nome}</div>
             </div>
-        </StyledWrapper>
-    );
+          </div>
+        </div>
+      </div>
+    </StyledWrapper>
+  );
 };
 
 
@@ -71,28 +71,28 @@ const StyledWrapper = styled.div`
 
 
     .brilho {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(43deg, rgb(65, 88, 208) 0%, rgb(200, 80, 192) 46%, rgb(255, 204, 112) 100%);
-    filter: blur(3rem);
-    opacity: 0.6;
-    border-radius: 20px;
-    transition: 200ms;
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(43deg, rgb(65, 88, 208) 0%, rgb(200, 80, 192) 46%, rgb(255, 204, 112) 100%);
+      filter: blur(3rem);
+      opacity: 0.6;
+      border-radius: 20px;
+      transition: 200ms;
     }
     
     .faixa-destaque {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: linear-gradient(90deg, #ffcc70, #f9b64d);
-    color: #000;
-    font-weight: bold;
-    padding: 6px 12px;
-    border-bottom-right-radius: 12px;
-    font-size: 0.9rem;
-    z-index: 2;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: linear-gradient(90deg, #ffcc70, #f9b64d);
+      color: #000;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-bottom-right-radius: 12px;
+      font-size: 0.9rem;
+      z-index: 2;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
 

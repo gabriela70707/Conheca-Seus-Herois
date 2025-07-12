@@ -8,10 +8,14 @@ import VoltarAoTopo from "../componentes/VoltarAoTopo";
 import { usePersonagens } from "../hooks/usePersonagens";
 import fundo from "../assets/fundo.png";
 import ButtonSair from "../componentes/BotaoSair";
+import FiltroPersonagensPorConflito from "../componentes/FiltroPersonagensPorConflito";
 import { Dialog, DialogTitle, DialogContent } from "@mui/material";
+import Rodape from '../componentes/Rodape'
 
 const AppWrapper = styled.div`
   min-height: 100vh;
+  display: flex
+  flex-direction: column;
   background-image: url(${fundo});
   background-size: cover;
   background-position: center;
@@ -86,6 +90,10 @@ const Home = () => {
   // Mensagem e Modal de saída
   const [mensagemSaida, setMensagemSaida] = useState("");
   const [openModal, setOpenModal] = useState(false);
+
+  //filtro de personagens com base nos conflitos
+  const [personagensFiltrados, setPersonagensFiltrados] = useState([]);
+  const [conflitoSelecionado, setConflitoSelecionado] = useState("");
   
 
   const handleLogout = () => {
@@ -131,6 +139,25 @@ const Home = () => {
     }
   }, [token]);
 
+    useEffect(() => {
+    const url = conflitoSelecionado
+      ? `${import.meta.env.VITE_API_URL}/personagens-conflitos/conflito/${conflitoSelecionado}/personagens`
+      : `${import.meta.env.VITE_API_URL}/personagens`;
+
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const filtrados = usuarioPersonagem
+          ? data.filter((p) => p.id !== usuarioPersonagem.id)
+          : data.filter((p) => !p.usuario_id);
+        setPersonagensFiltrados(filtrados);
+      });
+  }, [conflitoSelecionado, usuarioPersonagem]);
+
   if (loading) {
     return (
       <p style={{ color: "white", textAlign: "center" }}>
@@ -139,9 +166,6 @@ const Home = () => {
     );
   }
 
-  const personagensFiltrados = usuarioPersonagem
-    ? personagens.filter((p) => p.id !== usuarioPersonagem.id)
-    : personagens.filter((p) => !p.usuario_id);
 
   return (
     <AppWrapper>
@@ -190,9 +214,18 @@ const Home = () => {
         </section>
       )}
 
-      <h2 style={{ textAlign: "center", color: "white" }}>
+       <h2 style={{ textAlign: "center", color: "white" }}>
         Conheça seus heróis:
       </h2>
+      <p>Descubra os personagens que enfrentaram sentimentos parecidos com o que muitas vezes enfrentamos:</p>
+
+      {/* Filtro por conflito */}
+      <div style={{ maxWidth: "400px", margin: "0 auto" }}>
+        <FiltroPersonagensPorConflito
+          conflitoSelecionado={conflitoSelecionado}
+          setConflitoSelecionado={setConflitoSelecionado}
+        />
+      </div>
 
       {/* Personagem sorteado */}
       {personagemSorteado && (
@@ -211,7 +244,7 @@ const Home = () => {
         </section>
       )}
 
-      {/* Lista de personagens */}
+      {/* Lista de personagens filtrados */}
       <div style={{
         display: "flex",
         flexWrap: "wrap",
@@ -234,6 +267,7 @@ const Home = () => {
 
       {!usuarioPersonagem && <ConviteFinal />}
       <VoltarAoTopo />
+      <Rodape />
     </AppWrapper>
   );
 };

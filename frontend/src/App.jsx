@@ -6,6 +6,7 @@ import MeuPersonagem from './paginas/MeuPersonagem';
 import DetalhePersonagem from './paginas/DetalhePersonagem'
 import QuizResponder from './componentes/QuizResponder';
 import ListaQuizzes from './componentes/ListarQuizzes';
+import SobreNos from './paginas/SobreNos';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/personagem/:id" element={<DetalhePersonagem />}/>
         <Route path="/quiz/:id" element={<QuizResponder />}/>
         <Route path="/quizzes" element={<ListaQuizzes />}/>
+        <Route path="/sobre-nos" element={<SobreNos />}/>
       </Routes>
   );
 }

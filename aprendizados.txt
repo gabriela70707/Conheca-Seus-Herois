@@ -421,3 +421,41 @@ quiz.py	✅ Sim	Porque ele precisa saber o que é Pergunta para o relacionamento
 pergunta.py	❌ Não	Só usa "Quiz" como string, o que já é suficiente
 
 Declarar primeiro a logica estatica depois a dinamica (lembrar do que aconteceu com emblemas)
+
+🧩 Diferença entre SQLModel e SQLite no seu projeto
+🛠️ SQLModel
+É uma ferramenta Python que serve como ORM (mapeamento objeto-relacional).
+
+Permite que você defina suas tabelas como classes Python.
+
+Gera os comandos SQL automaticamente por trás das cortinas.
+
+É baseada no SQLAlchemy e integrada ao Pydantic — ou seja, você ganha:
+
+Tipagem
+
+Validação
+
+Relacionamentos elegantes
+
+Documentação automática
+
+👉 Exemplos no seu projeto: Você criou classes como Personagem, Quiz, Emblema — e todas elas são modelos SQLModel que viram tabelas no banco!
+
+🗃️ SQLite
+É o tipo de banco de dados que você está usando.
+
+Super leve, roda em um arquivo .db local (no seu caso: herois.db)
+
+Não precisa de servidor de banco (como PostgreSQL ou MySQL).
+
+Ideal pra protótipos, projetos solo ou MVPs.
+
+👉 No seu projeto: Você usou esta linha no database.py:
+
+python
+DATABASE_URL = "sqlite:///./herois.db"
+⚙️ Como eles trabalham juntos?
+O SQLModel é quem organiza os dados. O SQLite é onde os dados ficam armazenados.
+
+O SQLModel traduz suas classes Python em comandos SQL que o SQLite entende — e salva tudo no arquivo local. É como se o SQLModel falasse “guarde esse personagem aqui” e o SQLite obedecesse 😊

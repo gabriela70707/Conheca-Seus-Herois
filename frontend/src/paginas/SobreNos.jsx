@@ -166,7 +166,7 @@ const Cartao = styled.div`
       .botoes {
         display: flex;
         gap: 3vw;
-        height: 7vh;
+        height: 9vh;
         margin-bottom: 2rem;
         
         button {
@@ -299,7 +299,7 @@ const SobreNos = () => {
               className={secaoAtiva === 'historia' ? 'ativo' : ''}
               onClick={() => setSecaoAtiva('historia')}
             >
-              Minha História
+              Como nasceu o projeto
             </button>
         
               <button

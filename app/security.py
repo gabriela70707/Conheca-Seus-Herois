@@ -56,12 +56,6 @@ def get_current_user(token : str = Depends(oauth2_scheme), session : Session = D
 
 
 
-#entender melhor cada parte do codigo 
-# registrar as rotas no main
-# criar a logica para o usuario editar as cartinhas
-
-
-
 
 
 
@@ -78,7 +72,7 @@ Gera um hash único mesmo para senhas iguais
 Usa um “sal” embutido (um valor aleatório que impede que dois hashes iguais sejam gerados para senhas iguais)
 
 Anotações sobre o codigo para entender:
-S
+
 CryptContext é um gerenciador de algoritmos de hash
 
 Aqui, estamos dizendo: “use o algoritmo bcrypt”

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { FaInstagram, FaLinkedin, FaGithub } from "react-icons/fa";
 import imagemFooter from '../assets/imagemFooter.png'
+import { Link } from "react-router-dom";
 
 
 
@@ -60,15 +61,15 @@ export default function Rodape() {
       <div className="informacoes">
         <div className="links">
         <h3>Links Importantes:</h3>
-          <a href="https://github.com/gabriela70707" target="_blank" rel="noopener noreferrer">
+          <Link to = "/sobre-nos"  target="_blank" rel="noopener noreferrer">
             Sobre Nós
-          </a>
+          </Link>
 
-          <a href="https://github.com/gabriela70707" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/lucianoilustrador/" target="_blank" rel="noopener noreferrer">
             <FaInstagram /> Ilustrador Dos Cards
           </a>
           
-          <a href="https://github.com/gabriela70707" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/gabriela70707/Conheca-Seus-Herois" target="_blank" rel="noopener noreferrer">
             <FaGithub /> Repositório do Projeto
           </a>
 

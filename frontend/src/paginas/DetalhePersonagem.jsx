@@ -132,7 +132,7 @@ const Cartao = styled.div`
       border-radius: 16px;
       color: black;
       background-color:rgb(233, 234, 236);
-      height: 65vh;
+      min-height: 65vh;
       animation: slideFade 0.4s ease;
       padding: 1rem;
       display: grid;
@@ -364,7 +364,7 @@ const DetalhePersonagem = () => {
 
         <Bio>
           <p>
-            <strong>{usuarioPersonagem?.id === Number(id) ? "Pessoas que me inspiram na minha vida com Deus" : "Genealogia:"}</strong>
+            <strong>{usuarioPersonagem?.id === Number(id) ? "Pessoas que me inspiram na minha vida com Deus: " : "Genealogia: "}</strong>
             {personagem.genealogia}
           </p>
           <p><strong>Período:</strong> {personagem.periodo}</p>

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { FaInstagram, FaLinkedin, FaGithub } from "react-icons/fa";
-import imagemFooter from '../assets/imagemFooter.png'
+import imagemFooter from '../assets/jesusComLapis.png'
 import { Link } from "react-router-dom";
 
 

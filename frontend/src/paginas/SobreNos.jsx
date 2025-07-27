@@ -2,15 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import fundo from '../assets/fundo.png'
-import imagemSobreNos from '../assets/J&G-SemFundo.png'
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import jesusComLapis from '../assets/jesusComLapis.png'
+import verMais from '../assets/iconeVerMais.png'
+import jesusComBalao from '../assets/jesusBalao.png'
+import gabrielaFoto from '../assets/gabriela-sobre-nos.png'
+import lucianoFoto from '../assets/luciano-sobre-nos.png'
+import jesusFazendoCoracao from '../assets/jesusFazendoCoracao.png'
 import { useNavigate } from 'react-router-dom';
 
 
 
 const Wrapper = styled.div` 
-min-height: 100vh; 
-max-width: 100vw; 
+  min-height: 100vh; 
+  max-width: 100vw; 
   background-image: url(${fundo}); 
   background-size: cover; 
   background-position: center; 
@@ -25,7 +29,7 @@ max-width: 100vw;
     content: ''; 
     position: absolute; 
     inset: 0; 
-    background: rgba(0, 0, 0, 0.6); 
+    background: rgba(255, 255, 255, 0.74); 
     z-index: 0; 
     } 
     
@@ -38,321 +42,206 @@ max-width: 100vw;
 
 const Perfil = styled.div` 
   display: flex; 
-  background-color:rgb(233, 234, 236);
+  background: linear-gradient(to right, #4B72D5 28%, #0E38A1 69%, #0E38A1 100%);
   border-radius: 15px; 
-  padding: 3vh; 
+  margin-top: 13vh; 
   color: black; 
-  width: 90vw; 
-  height: 20vh; 
-  align-items: center; 
-  justify-content: space-between; 
-  
-  .personagem{ 
-    display: flex;   
-    align-items: center; 
-    } 
-    
-    img { 
-      padding: 0 2vw; 
-      height: 27vh; 
-      
-      } 
-      
-  .nome{ 
-    display: grid; 
-    font-size: 2vh; 
-    justify-items: start; 
-    height: 10vh; 
-
-    h2, p{ 
-      margin: 0; 
-      box-sizing: border-box; 
-      } 
-      }
-      
-      .emblemas{
-        display: grid;
-        justify-items: center; 
-        width: 30vw;
-        margin-right: 7vw;
-        height: 80%;
-        
-
-        h2{
-          font-size: 2.2vh;
-        }
-    }
-    
-    
-    .icones{
-      display: flex; 
-      justify-content: center;   
-      flex-wrap: wrap;  
-      padding: 1vh;
-
-
-      img{
-        padding: 0;
-      }
-    }
-        
-        `;
-
-const Informacoes = styled.div` 
-  display: grid; 
+  width: 80vw; 
+  height: 30vh; 
   align-items: end; 
-  justify-content: space-between; 
-  grid-template-columns: 300px 750px; 
-  height: 90vh; 
-`;
-
-const Cartao = styled.div` 
-  display: grid;
-  justify-content: center;
-  border-radius: 16px;
-  max-width: 700px;
-  text-align: center;
-  height: 90%;
-  align-content: end;
-
+  justify-content: space-around; 
+  
   img { 
-    width: 100%; 
-    margin-bottom: 1rem; 
+    height: 45vh; 
+    transform: scaleX(-1);
     } 
-    
-  h2 { 
-    color: black; 
-  } 
-  
-  p { 
-    margin: 0.5rem 0; 
-    color: black; 
-    } 
-    
-    .conteudo {
-      border-radius: 16px;
-      color: black;
-      background-color:rgb(233, 234, 236);
-      height: 65vh;
-      animation: slideFade 0.4s ease;
-      padding: 1rem;
-      display: grid;
-      justify-items: start;
       
-      .historia{
-        display: grid;
-        justify-items: start;
-        text-align: justify;
-        padding: 1.7vh;
-        font-size: 2.2vh;
-      }
-      
-      .link-biblia{
-        padding: 1vw;
-      }
-    }
-      
-      @keyframes slideFade {
-        from {
-          opacity: 0;
-          transform: translateX(20px);
-        }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-      }
-      
-      .botoes {
-        display: flex;
-        gap: 3vw;
-        height: 9vh;
-        margin-bottom: 2rem;
-        
-        button {
-          background-color: rgba(24, 96, 178, 0.3);
-          color: black;
-          width: 12vw;
-          transition: background-color 0.3s ease;
-
-          &.ativo {
-            background-color: rgba(24, 96, 178, 0.88);
-            color: white;
-            }
-        }
-  }
-`;
-
-const Bio = styled.div` 
-  display: grid;
-  background-color:rgb(233, 234, 236);
-  color: black; 
-  height: 85%; 
-  box-shadow: 0 0 20px rgba(0,0,0,0.3); 
-  border-radius: 16px; 
-  justify-content: center;
-  margin-left: 2vw;
-`;
-
-const ImagemContainer = styled.div`
-  position: relative;
-  display: inline-block;
-  
-  img {
-    height: 11vh;
-    border-radius: 50%;
-    transition: transform 0.2s;
-    }
-    
-    .nome {
-      position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0,0,0,0.7);
+  .titulo{ 
+    display: grid; 
+    justify-items: center;
+    align-items: start;
     color: white;
-    padding: 0.3rem 0.6rem;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    }
+    height: 30vh
     
-    &:hover .nome {
-      opacity: 1;
+
+    h1, h2{ 
+      margin: 0px; 
+      padding: 0px;
+      box-sizing: border-box; 
+    } 
   }
-  `;
 
+  
+`;
 
-const Mensagem = styled.p` 
-  color: white; 
-  text-align: center; 
-  margin-top: 4rem; 
-  font-size: 1.2rem; 
-  `;
+const VerMais = styled.div` 
+  display: grid; 
+  color: rgba(45, 82, 173, 1);
+  justify-items: center;
+  font-size: 3vh;
+  font-family: "League Gothic", sans-serif;
+  padding: 15vh;
+
+  .linkagem{
+    display: grid;
+    justify-items: center;
+    cursor: pointer;
+  }
+`;
+
+const Navegacao = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    .conteudo{
+      border: solid 2px red;
+
+      .nick{
+        color: rgba(33, 33, 33, 1);
+        font-family: 'Lilita One', cursive;
+      }
+    }
+  
+    
+  .vetor {
+    position: fixed;
+    top: 25%;
+    left: 90%;
+    transform: translateX(-50%);
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+.vetor img {
+  height: 50vh;
+  object-fit: contain;
+}
+
+`;
+
+const Agradecimento = styled.div`
+
+`;
 
 const SobreNos = () => {
-  const { id } = useParams();
-  const [personagem, setPersonagem] = useState(null);
-  const [erro, setErro] = useState(null);
-  const [emblemas, setEmblemas] = useState([]);
-  const [eventos, setEventos] = useState([])
-  const [relacionamentos, setRelacionamentos] = useState([])
-  const [secaoAtiva, setSecaoAtiva] = useState('historia');
-  const [usuarioPersonagem, setUsuarioPersonagem] = useState(null);
-  const token = localStorage.getItem("token");
-  const [emblemaSelecionado, setEmblemaSelecionado] = useState(null);
-  const [modalAberto, setModalAberto] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+  const img = document.querySelector('.vetor img');
+  const conteudo = document.querySelector('.conteudo');
+
+  if (!img || !conteudo) return;
+
+  const conteudoTop = conteudo.offsetTop;
+  const conteudoHeight = conteudo.offsetHeight;
+
+  let animationFrameId;
+
+  const animate = () => {
+    const scrollY = window.scrollY;
+    const viewportHeight = window.innerHeight;
+
+    // progresso da rolagem no conteúdo (0 até 1)
+    const scrollProgress = Math.min(
+      Math.max((scrollY - conteudoTop + viewportHeight) / (conteudoHeight + viewportHeight),
+      0),
+      1
+    );
+
+    // movimento de até 100px pra ilustrar — você pode aumentar ou suavizar
+    const translateY = scrollProgress * 100;
+
+    img.style.transform = `translate(-50%, ${translateY}px)`;
+
+    animationFrameId = requestAnimationFrame(animate);
+  };
+
+  animationFrameId = requestAnimationFrame(animate);
+
+  return () => cancelAnimationFrame(animationFrameId);
+}, []);
+
+
 
 
   return (
     <Wrapper>
       <Perfil>
-        <div className="personagem">
-          <img src={imagemSobreNos} alt="Ilustração De Jesus" />
-          <div className="nome">
-            <p>Olá, meu nome é </p>
-            <h2>Gabriela Alejandra</h2>
-          </div>
-        </div>
-        <div className="emblemas">
-          <h2>Emblemas:</h2>
-          <div className="icones">
-
-              <div>
-                <img
-                  src={fundo}
-                  alt=""
-                  style={{
-                    width: '65px',
-                    height: '65px',
-                    objectFit: 'cover',
-                    borderRadius: '50%',
-                    transition: 'transform 0.2s',
-                  }}
-                  onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
-                  onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                />
-              </div>
-
-          </div>
+        <img src={jesusComLapis} alt="vetor de Jesus segurando um lapís" />
+        <div className="titulo">
+          <h1>Conheça Seus Heroís</h1>
+          <h2>Sobre Nós</h2>
         </div>
       </Perfil>
 
+      <VerMais>
+        <h3><strong>Entenda como essa aventura começou ...</strong></h3>
+        <div className="linkagem">
+          <img src={verMais} alt="icone ver mais" />
+          <h3><strong>Ver Mais</strong></h3>
+        </div>
+      </VerMais>
 
-      <Informacoes>
-
-        <Bio>
-          <p>
-            <strong>Pessoas que me inspiram na minha vida com Deus</strong>
-            genealogia
-          </p>
-          <p><strong>Período:</strong> periodo</p>
-
-        </Bio>
-
-        <Cartao>
-          <div className="botoes">
-            <button
-              className={secaoAtiva === 'historia' ? 'ativo' : ''}
-              onClick={() => setSecaoAtiva('historia')}
-            >
-              Como nasceu o projeto
-            </button>
-        
-              <button
-                className={secaoAtiva === 'eventos' ? 'ativo' : ''}
-                onClick={() => setSecaoAtiva('eventos')}
-              >
-                Eventos Marcantes
-              </button>
-            
-
-            <button
-              className={secaoAtiva === 'licoes' ? 'ativo' : ''}
-              onClick={() => setSecaoAtiva('licoes')}
-            >
-              Lições
-            </button>
-          </div>
-
-          <div className="conteudo">
-            {secaoAtiva === 'historia' && (
-              <>
-                <section className='historia'>
-                  <p>historia</p>
-
-
-
-                </section>
-                <p className='link-biblia'>
-                 biblia
-                </p>
-              </>
-            )}
-              <p><strong>Lições:</strong>licoes</p>
-
-              <div className="eventos">
-                {eventos.length > 0 ? (
-                  eventos.map((evento) => (
-                    <div key={evento.id} style={{ marginBottom: '1rem' }}>
-                      <h3>{evento.titulo}</h3>
-                      <p><strong>Local:</strong> local</p>
-                      <p><strong>Descrição:</strong> descricao</p>
-                    </div>
-                  ))
-                ) : (
-                  <p style={{ color: '#555' }}><em>Nenhum evento registrado para este personagem.</em></p>
-                )}
-              </div>
-            
+      <Navegacao>
+        <div className="conteudo">
+          <div className="como-nasceu-projeto">
+            <h2>Como Nasceu o Projeto</h2>
+            <p>
+              djalkdjalskdjlasdkjalskdjsald
+            </p>
 
           </div>
-        </Cartao>
 
-      </Informacoes>
+          <div className="missao-visao-valores">
+            <h2>Missão, Visão e Valores</h2>
+            <p>
+              lçdkssçaldkasçdkasçdkç
+            </p>
+          </div>
+
+          <div className="desenvolvedora">
+            <h2>Desenvolvedora</h2>
+
+            <div className="nick">
+              <img src={gabrielaFoto} alt="Foto da Gabriela, desenvolvedora" />
+              <h2>Gabriela Alejandra</h2>
+              <h3>@gabriela_bergamine</h3>
+            </div>
+          </div>
+
+          <p>kdjlasdjlasdjlasjdl</p>
+
+          <div className="ilustrador">
+
+            <div className="nick">
+              <img src={lucianoFoto} alt="Foto Luciano, ilustrador" />
+              <h2>Luciano Ramos</h2>
+              <h3>@lucianoilustrador</h3>
+            </div>
+
+            <p>dasdasdasdasdas</p>
+
+          </div>
+        </div>
+
+        <div className="vetor">
+          <img src={jesusComBalao} alt="Jesus com Balão" />
+        </div>
+
+      </Navegacao>
+
+      <Agradecimento>
+        <img src={jesusFazendoCoracao} alt="Vetor de Jesus fazendo coração" />
+        <div className="redirecionamento">
+          <h3>Obrigada por chegar até aqui!</h3>
+          <button>Voltar a Home</button>
+        </div>
+      </Agradecimento>
+
     </Wrapper>
   );
 };

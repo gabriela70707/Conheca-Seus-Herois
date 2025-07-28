@@ -51,6 +51,7 @@ const Wrapper = styled.div`
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
+    color: white;
   }
 
   button:hover {

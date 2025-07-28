@@ -38,6 +38,7 @@ const Wrapper = styled.div`
     font-size: 1rem;
     cursor: pointer;
     transition: 0.3s;
+    color: white;
   }
 
   button:hover {

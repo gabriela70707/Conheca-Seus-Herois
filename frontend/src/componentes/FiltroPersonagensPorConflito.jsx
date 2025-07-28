@@ -31,7 +31,7 @@ function FiltroPersonagensPorConflito({
           <Typography
             variant="h6"
             gutterBottom
-            style={{ textAlign: "center", color: "#fff" , fontSize:'2vh', padding:'1vh'}}
+            style={{ textAlign: "center", color: "#fff" , fontSize:'1.8vh', padding:'1vh'}}
           >
             Filtrar personagens por conflito:
           </Typography>
@@ -39,7 +39,7 @@ function FiltroPersonagensPorConflito({
           <FormControl fullWidth style={{ marginBottom: "1rem" }}>
             <InputLabel
               id="select-conflito-label"
-              style={{ color: "white", fontSize : '2vh'}}
+              style={{ color: "white", fontSize : '1.8vh'}}
             >
               Selecionar conflito
             </InputLabel>

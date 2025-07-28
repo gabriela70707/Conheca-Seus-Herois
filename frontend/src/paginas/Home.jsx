@@ -37,6 +37,10 @@ const AppWrapper = styled.div`
     position: relative;
     z-index: 1;
   }
+  
+  p{
+    color: white;
+  }
 
   .meu-personagem {
     display: flex;
@@ -51,6 +55,7 @@ const AppWrapper = styled.div`
       button{
         text-align: center;
         background-color:rgb(33, 96, 185);
+        color: white;
       }
     
       button:hover{

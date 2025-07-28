@@ -9,6 +9,7 @@ import gabrielaFoto from '../assets/gabriela-sobre-nos.png'
 import lucianoFoto from '../assets/luciano-sobre-nos.png'
 import jesusFazendoCoracao from '../assets/jesusFazendoCoracao.png'
 import { useNavigate } from 'react-router-dom';
+import VoltarAoTopo from "../componentes/VoltarAoTopo";
 
 
 
@@ -96,9 +97,31 @@ const Navegacao = styled.div`
     .conteudo{
       border: solid 2px red;
 
-      .nick{
-        color: rgba(33, 33, 33, 1);
+      h2{
+        color: rgba(14, 55, 160, 1);
         font-family: 'Lilita One', cursive;
+      }
+      
+      p{
+        color: rgba(33, 33, 33, 1);
+        font-family: "AR One Sans";
+      }
+
+      .nick{
+        color: rgba(21, 21, 21, 1);
+        font-family: 'Lilita One', cursive;
+
+        h3{
+          font-size: 2.8vh;
+        }
+        
+        h4{
+          font-size: 2vh;
+        }
+
+        img{
+          height: 22vh;
+        }
       }
     }
   
@@ -189,7 +212,7 @@ const SobreNos = () => {
       <Navegacao>
         <div className="conteudo">
           <div className="como-nasceu-projeto">
-            <h2>Como Nasceu o Projeto</h2>
+            <h2>Como Nasceu o Projeto?</h2>
             <p>
               djalkdjalskdjlasdkjalskdjsald
             </p>
@@ -208,8 +231,8 @@ const SobreNos = () => {
 
             <div className="nick">
               <img src={gabrielaFoto} alt="Foto da Gabriela, desenvolvedora" />
-              <h2>Gabriela Alejandra</h2>
-              <h3>@gabriela_bergamine</h3>
+              <h3>Gabriela Alejandra</h3>
+              <h4>@gabriela_bergamine</h4>
             </div>
           </div>
 
@@ -219,8 +242,8 @@ const SobreNos = () => {
 
             <div className="nick">
               <img src={lucianoFoto} alt="Foto Luciano, ilustrador" />
-              <h2>Luciano Ramos</h2>
-              <h3>@lucianoilustrador</h3>
+              <h3>Luciano Ramos</h3>
+              <h4>@lucianoilustrador</h4>
             </div>
 
             <p>dasdasdasdasdas</p>
@@ -241,6 +264,10 @@ const SobreNos = () => {
           <button>Voltar a Home</button>
         </div>
       </Agradecimento>
+
+      <div>
+        <VoltarAoTopo />
+      </div>
 
     </Wrapper>
   );

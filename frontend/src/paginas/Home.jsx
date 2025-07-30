@@ -52,15 +52,15 @@ const AppWrapper = styled.div`
     align-items: start;
     padding: 2vh;
       
-      button{
-        text-align: center;
-        background-color:rgb(33, 96, 185);
-        color: white;
-      }
-    
-      button:hover{
-        background-color:rgb(19, 66, 133);
-      }
+    button{
+      text-align: center;
+      background-color:rgb(33, 96, 185);
+      color: white;
+    }
+  
+    button:hover{
+      background-color:rgb(19, 66, 133);
+    }
       
   }
 

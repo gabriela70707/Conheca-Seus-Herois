@@ -93,6 +93,7 @@ const VerMais = styled.div`
 const Navegacao = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
+    
 
     .conteudo{
       border: solid 2px red;
@@ -105,6 +106,13 @@ const Navegacao = styled.div`
       p{
         color: rgba(33, 33, 33, 1);
         font-family: "AR One Sans";
+      }
+
+      .nick p{
+        max-width: 30vw;
+        background-color: rgba(226, 220, 220, 0.7);
+        border-radius: 2vh;
+        padding: 2vh;
       }
 
       .nick{
@@ -147,7 +155,23 @@ const Navegacao = styled.div`
 `;
 
 const Agradecimento = styled.div`
+    display: flex;
+    align-items: center;
+    
 
+    button{
+      text-align: center;
+      background-color:rgb(33, 96, 185);
+      color: white;
+    }
+  
+    button:hover{
+      background-color:rgb(19, 66, 133);
+    }
+
+    img{
+      height: 30vh;
+    }
 `;
 
 const SobreNos = () => {
@@ -233,10 +257,15 @@ const SobreNos = () => {
               <img src={gabrielaFoto} alt="Foto da Gabriela, desenvolvedora" />
               <h3>Gabriela Alejandra</h3>
               <h4>@gabriela_bergamine</h4>
+              <p>Ele se formou no Curso Técnico de Enfermagem, chegou a passar pela faculdade de Educação Física, mas foi se encontrar como profissional numa área, 
+              muito diferente: na arte do desenho.Luciano Fortunato Ramos nunca imaginou que ganharia a vida desenhando.
+               “De pequeno meu pai me ensinou a desenhar usando o carbono, depois comecei a fazer algumas histórias sem pé nem cabeça do “cavaleiro solitário” 
+               (uau, me lembro até de como era a roupa desse personagem!), depois era fazer capas de trabalhos escolares para amigos, entre outras coisas!”, 
+               lembra o artista. Mas foi no curso de Marketing que um amigo o descobriu e o chamou para desenhar em uma empresa. “Recusei, a princípio, por insegurança, 
+               mas depois a mesma oportunidade bateu à porta, e agarrei, foi onde conheci a editora em que fiquei por oito anos”, conta.</p>
             </div>
           </div>
 
-          <p>kdjlasdjlasdjlasjdl</p>
 
           <div className="ilustrador">
 
@@ -244,9 +273,14 @@ const SobreNos = () => {
               <img src={lucianoFoto} alt="Foto Luciano, ilustrador" />
               <h3>Luciano Ramos</h3>
               <h4>@lucianoilustrador</h4>
+              <p>Ele se formou no Curso Técnico de Enfermagem, chegou a passar pela faculdade de Educação Física, mas foi se encontrar como profissional numa área, 
+              muito diferente: na arte do desenho.Luciano Fortunato Ramos nunca imaginou que ganharia a vida desenhando.
+               “De pequeno meu pai me ensinou a desenhar usando o carbono, depois comecei a fazer algumas histórias sem pé nem cabeça do “cavaleiro solitário” 
+               (uau, me lembro até de como era a roupa desse personagem!), depois era fazer capas de trabalhos escolares para amigos, entre outras coisas!”, 
+               lembra o artista. Mas foi no curso de Marketing que um amigo o descobriu e o chamou para desenhar em uma empresa. “Recusei, a princípio, por insegurança, 
+               mas depois a mesma oportunidade bateu à porta, e agarrei, foi onde conheci a editora em que fiquei por oito anos”, conta.</p>
             </div>
 
-            <p>dasdasdasdasdas</p>
 
           </div>
         </div>

@@ -143,7 +143,7 @@ const Cartao = styled.div`
         justify-items: start;
         text-align: justify;
         padding: 1.7vh;
-        font-size: 2.2vh;
+        font-size: 1.9vh;
       }
       
       .link-biblia{
@@ -191,6 +191,9 @@ const Bio = styled.div`
   border-radius: 16px; 
   justify-content: center;
   margin-left: 2vw;
+  padding: 2vh;
+  gap: 7vh;
+
 `;
 
 const ImagemContainer = styled.div`

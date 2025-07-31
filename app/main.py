@@ -37,7 +37,7 @@ from app.routes import (
 
 app = FastAPI() #instancia do fastapi
 
-# Usei isso para garantir que a pasta static seja criada caso nao seja encontradas
+# Usei isso para garantir que a pasta static seja criada caso nao seja encontrada
 # if not os.path.exists("static"):
 #     os.makedirs("static")
 

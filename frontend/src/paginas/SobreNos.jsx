@@ -96,11 +96,25 @@ const Navegacao = styled.div`
     
 
     .conteudo{
-      border: solid 2px red;
+
+      .como-nasceu-projeto, .missao-visao-valores{
+        display: grid;
+        justify-content: center;
+
+        p{
+          max-width: 30vw;
+          background-color: rgba(226, 220, 220, 0.7);
+          border-radius: 2vh;
+          padding: 2vh;
+          font-weight: 520;
+        }
+      }
 
       h2{
         color: rgba(14, 55, 160, 1);
         font-family: 'Lilita One', cursive;
+        font-size: 3.2vh;
+        text-align: center;
       }
       
       p{
@@ -113,9 +127,12 @@ const Navegacao = styled.div`
         background-color: rgba(226, 220, 220, 0.7);
         border-radius: 2vh;
         padding: 2vh;
+        font-weight: 520;
       }
 
       .nick{
+        display: grid;
+        justify-items: center;
         color: rgba(21, 21, 21, 1);
         font-family: 'Lilita One', cursive;
 
@@ -128,7 +145,7 @@ const Navegacao = styled.div`
         }
 
         img{
-          height: 22vh;
+          height: 27vh;
         }
       }
     }
@@ -157,12 +174,18 @@ const Navegacao = styled.div`
 const Agradecimento = styled.div`
     display: flex;
     align-items: center;
-    
+    gap: 18vh;
+    margin-top: 20vh;
+
+    h3{
+      color: black;
+    }
 
     button{
       text-align: center;
       background-color:rgb(33, 96, 185);
       color: white;
+      margin-top: 3vh;
     }
   
     button:hover{
@@ -172,45 +195,49 @@ const Agradecimento = styled.div`
     img{
       height: 30vh;
     }
+
+    .redirecionamento{
+      display: grid;
+    }
 `;
 
 const SobreNos = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-  const img = document.querySelector('.vetor img');
-  const conteudo = document.querySelector('.conteudo');
+    const img = document.querySelector('.vetor img');
+    const conteudo = document.querySelector('.conteudo');
 
-  if (!img || !conteudo) return;
+    if (!img || !conteudo) return;
 
-  const conteudoTop = conteudo.offsetTop;
-  const conteudoHeight = conteudo.offsetHeight;
+    const conteudoTop = conteudo.offsetTop;
+    const conteudoHeight = conteudo.offsetHeight;
 
-  let animationFrameId;
+    let animationFrameId;
 
-  const animate = () => {
-    const scrollY = window.scrollY;
-    const viewportHeight = window.innerHeight;
+    const animate = () => {
+      const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
 
-    // progresso da rolagem no conteúdo (0 até 1)
-    const scrollProgress = Math.min(
-      Math.max((scrollY - conteudoTop + viewportHeight) / (conteudoHeight + viewportHeight),
-      0),
-      1
-    );
+      // progresso da rolagem no conteúdo (0 até 1)
+      const scrollProgress = Math.min(
+        Math.max((scrollY - conteudoTop + viewportHeight) / (conteudoHeight + viewportHeight),
+          0),
+        1
+      );
 
-    // movimento de até 100px pra ilustrar — você pode aumentar ou suavizar
-    const translateY = scrollProgress * 100;
+      // movimento de até 100px pra ilustrar — você pode aumentar ou suavizar
+      const translateY = scrollProgress * 100;
 
-    img.style.transform = `translate(-50%, ${translateY}px)`;
+      img.style.transform = `translate(-50%, ${translateY}px)`;
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
 
     animationFrameId = requestAnimationFrame(animate);
-  };
 
-  animationFrameId = requestAnimationFrame(animate);
-
-  return () => cancelAnimationFrame(animationFrameId);
-}, []);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, []);
 
 
 
@@ -238,7 +265,16 @@ const SobreNos = () => {
           <div className="como-nasceu-projeto">
             <h2>Como Nasceu o Projeto?</h2>
             <p>
-              djalkdjalskdjlasdkjalskdjsald
+              O projeto nasceu a partir do desejo de tornar o evangelho acessivel a todos. A ideia é que
+              esse projeto fosse uma ponte para que os cristões pudessem conhecer os personagens biblícos
+              de forma leve.
+            </p>
+            <p>
+              Além disso, o projeto vem para ser um marco em sua caminhada com Deus onde o usuário, possa
+              se sentir parte da história, afinal de contas ele é parte de tudo isso.
+              O usuário pode usar o projeto para registrar um pouquinho da sua história com Deus através da
+              sua criação da sua propria cartinha e testar seus conhecimentos através dos quizzes do sistema
+              de forma leve e divertida.
             </p>
 
           </div>
@@ -246,7 +282,24 @@ const SobreNos = () => {
           <div className="missao-visao-valores">
             <h2>Missão, Visão e Valores</h2>
             <p>
-              lçdkssçaldkasçdkasçdkç
+              Visão: Ver vidas transformadas por meio de uma experiência pessoal com o Evangelho, espalhado com criatividade pelo mundo
+            </p>
+
+            <p>
+              Missão: Usar tecnologia e linguagem acessível para apresentar Jesus ao mundo, conectando pessoas de todas as idades à Bíblia por meio de experiências interativas e unicas.
+            </p>
+
+            <p>
+              Valores:
+
+              <p>Jesus: no centro de tudo, nossa fonte e inspiração.</p>
+
+              <p>Verdade: vivemos e comunicamos o evangelho sem distorções.</p>
+
+              <p>Criatividade: usamos ferramentas inovadoras para tornar a Bíblia acessível.</p>
+
+              <p>Inovação: buscamos sempre novas formas de tocar corações com a Palavra.</p>
+
             </p>
           </div>
 
@@ -257,28 +310,30 @@ const SobreNos = () => {
               <img src={gabrielaFoto} alt="Foto da Gabriela, desenvolvedora" />
               <h3>Gabriela Alejandra</h3>
               <h4>@gabriela_bergamine</h4>
-              <p>Ele se formou no Curso Técnico de Enfermagem, chegou a passar pela faculdade de Educação Física, mas foi se encontrar como profissional numa área, 
-              muito diferente: na arte do desenho.Luciano Fortunato Ramos nunca imaginou que ganharia a vida desenhando.
-               “De pequeno meu pai me ensinou a desenhar usando o carbono, depois comecei a fazer algumas histórias sem pé nem cabeça do “cavaleiro solitário” 
-               (uau, me lembro até de como era a roupa desse personagem!), depois era fazer capas de trabalhos escolares para amigos, entre outras coisas!”, 
-               lembra o artista. Mas foi no curso de Marketing que um amigo o descobriu e o chamou para desenhar em uma empresa. “Recusei, a princípio, por insegurança, 
-               mas depois a mesma oportunidade bateu à porta, e agarrei, foi onde conheci a editora em que fiquei por oito anos”, conta.</p>
+              <p>Sempre fui apaixonada por criar coisas. Quando criança sempre procurava por ideias que eu poderia colocar em pratica, 
+                andava sempre caçando papelões, colas, e outros materiais. Depois de um tempo cresci e conheci o mundo da tecnologia 
+                foi quando me tornei programadora e vi na tecnologia a oportunidade de usar a criatividade para fazer a diferença na 
+                vida das pessoas.
+                Se tem algo no qual amo mais que a tecnologia é a Palavra de Deus. Por isso fazer esse projeto usando tudo que eu aprendi 
+                na profissão que Deus me deu é uma grande honra e alegria. Espero poder continuar levando o evangelho em tudo que eu fizer de alguma forma.
+              </p>
             </div>
           </div>
 
 
           <div className="ilustrador">
+            <h2>Ilustrador</h2>
 
             <div className="nick">
               <img src={lucianoFoto} alt="Foto Luciano, ilustrador" />
               <h3>Luciano Ramos</h3>
               <h4>@lucianoilustrador</h4>
-              <p>Ele se formou no Curso Técnico de Enfermagem, chegou a passar pela faculdade de Educação Física, mas foi se encontrar como profissional numa área, 
-              muito diferente: na arte do desenho.Luciano Fortunato Ramos nunca imaginou que ganharia a vida desenhando.
-               “De pequeno meu pai me ensinou a desenhar usando o carbono, depois comecei a fazer algumas histórias sem pé nem cabeça do “cavaleiro solitário” 
-               (uau, me lembro até de como era a roupa desse personagem!), depois era fazer capas de trabalhos escolares para amigos, entre outras coisas!”, 
-               lembra o artista. Mas foi no curso de Marketing que um amigo o descobriu e o chamou para desenhar em uma empresa. “Recusei, a princípio, por insegurança, 
-               mas depois a mesma oportunidade bateu à porta, e agarrei, foi onde conheci a editora em que fiquei por oito anos”, conta.</p>
+              <p>Ele se formou no Curso Técnico de Enfermagem, chegou a passar pela faculdade de Educação Física, mas foi se encontrar como profissional numa área,
+                muito diferente: na arte do desenho.Luciano Fortunato Ramos nunca imaginou que ganharia a vida desenhando.
+                “De pequeno meu pai me ensinou a desenhar usando o carbono, depois comecei a fazer algumas histórias sem pé nem cabeça do “cavaleiro solitário”
+                (uau, me lembro até de como era a roupa desse personagem!), depois era fazer capas de trabalhos escolares para amigos, entre outras coisas!”,
+                lembra o artista. Mas foi no curso de Marketing que um amigo o descobriu e o chamou para desenhar em uma empresa. “Recusei, a princípio, por insegurança,
+                mas depois a mesma oportunidade bateu à porta, e agarrei, foi onde conheci a editora em que fiquei por oito anos”, conta.</p>
             </div>
 
 
@@ -295,7 +350,7 @@ const SobreNos = () => {
         <img src={jesusFazendoCoracao} alt="Vetor de Jesus fazendo coração" />
         <div className="redirecionamento">
           <h3>Obrigada por chegar até aqui!</h3>
-          <button>Voltar a Home</button>
+          <button onClick={() => navigate('/')}>Voltar a Home</button>
         </div>
       </Agradecimento>
 

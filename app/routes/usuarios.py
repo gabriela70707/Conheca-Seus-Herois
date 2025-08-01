@@ -37,3 +37,4 @@ def registrar_usuario(dados : UsuarioCreate, session : Session = Depends(get_ses
     session.commit()
 
     return usuario
+

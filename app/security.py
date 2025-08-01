@@ -40,7 +40,7 @@ def decodificar_token_jwt(token : str) -> dict:
 #FUNÇÂO PARA OBTER USUARIO LOGADO
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 
-def get_current_user(token : str = Depends(oauth2_scheme), session : Session = Depends(get_session)) -> Usuario:
+def get_current_user(token : str = Depends(oauth2_scheme), session : Session = Depends(get_session)) -> Usuario: #buscar o usuario no banco de dados
     payload = decodificar_token_jwt(token)
     if not payload or "sub" not in payload:
         raise HTTPException(status_code=401, detail="Token invalido ou expirado")

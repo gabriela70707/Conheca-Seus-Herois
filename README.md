@@ -252,15 +252,10 @@ Contribuições são sempre bem-vindas! Se você quer ajudar:
 
 ---
 
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
----
 
 ## 🙏 Agradecimentos
 
-- A Deus, fonte de toda inspiração
+- A Deus meu melhor amigo, fonte de toda inspiração
 - Luciano Ramos, pelas ilustrações incríveis
 - Comunidade open source
 - Todos que testaram e deram feedback

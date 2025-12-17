@@ -271,7 +271,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 Se tiver dúvidas ou sugestões, entre em contato:
 
-- 📧 Email: [seu-email@example.com]
+- 📧 Email: [gabrielasantos70707@gmail.com]
 - 💼 LinkedIn: [Seu LinkedIn]
 - 📱 Instagram: [@gabriela_bergamine](https://instagram.com/gabriela_bergamine)
 
